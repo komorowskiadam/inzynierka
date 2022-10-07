@@ -1,2 +1,9 @@
-package com.komorowski.backend.repository;public interface PartyRepository {
+package com.komorowski.backend.repository;
+
+import com.komorowski.backend.model.Party;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface PartyRepository extends JpaRepository<Party, Long> {
 }

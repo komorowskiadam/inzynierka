@@ -1,2 +1,6 @@
-package com.komorowski.backend.model;public enum ERole {
+package com.komorowski.backend.model;
+
+public enum ERole {
+    ROLE_USER,
+    ROLE_ADMIN
 }

@@ -1,2 +1,12 @@
-package com.komorowski.backend.payload.response;public class MessageResponse {
+package com.komorowski.backend.payload.response;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
+public class MessageResponse {
+    private String message;
 }

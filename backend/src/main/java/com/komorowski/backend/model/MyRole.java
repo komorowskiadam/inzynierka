@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Role {
+public class MyRole {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +22,7 @@ public class Role {
     private ERole name;
 
 
-    public Role(ERole name) {
+    public MyRole(ERole name) {
         this.name = name;
     }
 
