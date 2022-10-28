@@ -1,0 +1,29 @@
+<div class="register-content">
+  <h1>Register</h1>
+  <form [formGroup]="registerForm" (ngSubmit)="register()">
+    <mat-form-field class="form-field" appearance="fill">
+      <mat-label>Login</mat-label>
+      <input matInput type="text" formControlName="username" required />
+      <mat-error *ngIf="registerForm.get('username')?.hasError('minlength')">
+        Login should have at least 4 characters.
+      </mat-error>
+      <mat-error *ngIf="registerForm.get('username')?.hasError('required')">
+        This field is necessary.
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="form-field" appearance="fill">
+      <mat-label>Password</mat-label>
+      <input matInput type="password" formControlName="password" required />
+      <mat-error *ngIf="registerForm.get('password')?.hasError('minlength')">
+        Password should have at least 4 characters.
+      </mat-error>
+      <mat-error *ngIf="registerForm.get('password')?.hasError('required')">
+        This field is necessary.
+      </mat-error>
+    </mat-form-field>
+    <button mat-raised-button color="primary">Login</button>
+  </form>
+</div>
+
+<h2 *ngIf="errorMessage">{{ errorMessage }}</h2>
+<h2 *ngIf="successMessage">{{ successMessage }} <a routerLink="/login">Log in!</a></h2>
