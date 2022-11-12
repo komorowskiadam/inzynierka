@@ -33,6 +33,7 @@ export class LoginComponent implements OnInit {
       this.tokenStorage.saveToken(response.token);
       this.tokenStorage.saveUsername(response.username);
       this.tokenStorage.saveAuthorities(response.roles);
+      this.tokenStorage.saveId(response.id);
       this.router.navigate(['/main-page']);
     });
   }

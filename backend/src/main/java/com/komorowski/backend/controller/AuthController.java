@@ -1,9 +1,8 @@
 package com.komorowski.backend.controller;
 
-
 import com.komorowski.backend.model.ERole;
-import com.komorowski.backend.model.MyUser;
 import com.komorowski.backend.model.MyRole;
+import com.komorowski.backend.model.MyUser;
 import com.komorowski.backend.payload.request.LoginRequest;
 import com.komorowski.backend.payload.request.SignupRequest;
 import com.komorowski.backend.payload.response.JwtResponse;
@@ -12,7 +11,7 @@ import com.komorowski.backend.repository.MyUserRepository;
 import com.komorowski.backend.repository.RoleRepository;
 import com.komorowski.backend.security.jwt.JwtUtils;
 import com.komorowski.backend.security.services.UserDetailsImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -30,21 +29,18 @@ import java.util.stream.Collectors;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/auth")
+@RequiredArgsConstructor
 public class AuthController {
-    @Autowired
-    AuthenticationManager authenticationManager;
 
-    @Autowired
-    MyUserRepository myUserRepository;
+    private final AuthenticationManager authenticationManager;
 
-    @Autowired
-    RoleRepository roleRepository;
+    private final MyUserRepository myUserRepository;
 
-    @Autowired
-    PasswordEncoder encoder;
+    private final RoleRepository roleRepository;
 
-    @Autowired
-    JwtUtils jwtUtils;
+    private final PasswordEncoder encoder;
+
+    private final JwtUtils jwtUtils;
 
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
@@ -86,17 +82,20 @@ public class AuthController {
             roles.add(userRole);
         } else {
             strRoles.forEach(role -> {
-                switch (role) {
-                    case "admin":
-                        MyRole adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                        roles.add(adminRole);
+                if ("creator".equals(role)) {
+                    MyRole creatorRole = roleRepository.findByName(ERole.ROLE_CREATOR)
+                            .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                    roles.add(creatorRole);
 
-                        break;
-                    default:
-                        MyRole userRole = roleRepository.findByName(ERole.ROLE_USER)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                        roles.add(userRole);
+                    user.setName(signUpRequest.getName());
+                    user.setDescription(signUpRequest.getDescription());
+                } else {
+                    MyRole userRole = roleRepository.findByName(ERole.ROLE_USER)
+                            .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                    roles.add(userRole);
+
+                    user.setName(signUpRequest.getName());
+                    user.setSurname(signUpRequest.getSurname());
                 }
             });
         }
@@ -105,5 +104,42 @@ public class AuthController {
         myUserRepository.save(user);
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+    }
+
+    @GetMapping("users")
+    public ResponseEntity<List<MyUser>> getAllUsers() {
+
+        MyRole userRole = roleRepository.findByName(ERole.ROLE_USER)
+                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+
+        List<MyUser> users = myUserRepository.findAll()
+                .stream()
+                .filter(myUser -> myUser.getRoles().contains(userRole))
+                .toList();
+
+        return ResponseEntity.ok(users);
+    }
+
+    @GetMapping("creators")
+    public ResponseEntity<List<MyUser>> getAllCreators() {
+        MyRole creatorRole = roleRepository.findByName(ERole.ROLE_CREATOR)
+                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+
+        List<MyUser> users = myUserRepository.findAll()
+                .stream()
+                .filter(myUser -> myUser.getRoles().contains(creatorRole))
+                .toList();
+
+        return ResponseEntity.ok(users);
+    }
+
+    @GetMapping("users/{id}")
+    public ResponseEntity<?> getUserById(@PathVariable Long id) {
+        if(!myUserRepository.existsById(id)){
+            return ResponseEntity.badRequest().body("No user with that id.");
+        }
+        MyUser user = myUserRepository.findById(id).get();
+
+        return ResponseEntity.ok(user);
     }
 }

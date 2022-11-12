@@ -7,6 +7,8 @@ export interface RegisterData {
   username: string;
   password: string;
   roles: string[];
+  name: string;
+  description: string;
 }
 
 export interface RegisterResponse {
@@ -14,10 +16,17 @@ export interface RegisterResponse {
 }
 
 export interface JwtResponse {
-  ranks: string;
+  id: number;
   token: string;
-  type: string;
   username: string;
   roles: string[];
 }
 
+export interface CreateEventDto {
+  organizerId: number;
+  name: string;
+}
+
+export interface EditEventDto {
+  name: string;
+}

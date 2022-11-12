@@ -1,0 +1,14 @@
+<h1>Edit Event Details</h1>
+<form [formGroup]="editForm" (ngSubmit)="edit()">
+  <mat-form-field class="form-field" appearance="fill">
+    <mat-label>Name</mat-label>
+    <input matInput type="text" formControlName="name" required />
+    <mat-error *ngIf="editForm.get('name')?.hasError('required')">
+      Name is required.
+    </mat-error>
+    <mat-error *ngIf="editForm.get('name')?.hasError('minlength')">
+      Name should have at least 5 characters.
+    </mat-error>
+  </mat-form-field>
+  <button mat-raised-button color="primary">Edit</button>
+</form>

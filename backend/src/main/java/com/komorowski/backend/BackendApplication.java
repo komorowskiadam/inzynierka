@@ -19,11 +19,11 @@ public class BackendApplication {
     public CommandLineRunner roleData(RoleRepository roleRepository){
 
         MyRole roleUser = new MyRole(ERole.ROLE_USER);
-        MyRole roleAdmin = new MyRole(ERole.ROLE_ADMIN);
+        MyRole roleCreator = new MyRole(ERole.ROLE_CREATOR);
 
         return args -> {
             roleRepository.save(roleUser);
-            roleRepository.save(roleAdmin);
+            roleRepository.save(roleCreator);
         };
     }
 

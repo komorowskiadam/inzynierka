@@ -3,6 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { JwtResponse, LoginData, RegisterData, RegisterResponse } from "../dto/Dtos";
 import { TokenStorageService } from "./token-storage.service";
+import { Creator } from "../model/Models";
 
 const backendAddress = 'http://localhost:8080';
 
@@ -22,30 +23,8 @@ export class AuthService {
     return this.http.post<RegisterResponse>(backendAddress + '/auth' + '/signup', registerData);
   }
 
-  isUser(): boolean {
-    let is = false;
-    if (this.tokenStorage.getToken()) {
-      let roles = this.tokenStorage.getAuthorities();
-      roles.every(role => {
-        if (role === 'ROLE_ADMIN' || role === 'ROLE_USER') {
-          is = true;
-        }
-      });
-    }
-    return is;
-  }
-
-  isAdmin(): boolean {
-    let is = false;
-    if (this.tokenStorage.getToken()) {
-      let roles = this.tokenStorage.getAuthorities();
-      roles.every(role => {
-        if (role === 'ROLE_ADMIN') {
-          is = true
-        }
-      });
-    }
-    return is;
+  getUserById(id: number): Observable<Creator> {
+    return this.http.get<Creator>(backendAddress + '/auth' + '/users/' + id);
   }
 
 }

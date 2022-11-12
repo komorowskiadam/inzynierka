@@ -1,2 +1,11 @@
 <p>main-page works!</p>
+<a routerLink="/create-event">Create Event</a>
 <button (click)="logout()">Log out</button>
+
+<app-user-events-list></app-user-events-list>
+
+<div>
+  <h1>Your details: </h1>
+  <h2>Name: {{creator.name}}</h2>
+  <h2>Your description: {{creator.description}}</h2>
+</div>

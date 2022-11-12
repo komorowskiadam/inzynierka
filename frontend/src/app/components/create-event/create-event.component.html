@@ -1,0 +1,14 @@
+<h1>Create New Event</h1>
+<form [formGroup]="createEventForm" (ngSubmit)="createEvent()">
+  <mat-form-field class="form-field" appearance="fill">
+    <mat-label>Name</mat-label>
+    <input matInput type="text" formControlName="name" required />
+    <mat-error *ngIf="createEventForm.get('name')?.hasError('required')">
+      Name is required.
+    </mat-error>
+    <mat-error *ngIf="createEventForm.get('name')?.hasError('minlength')">
+      Name should have at least 5 characters.
+    </mat-error>
+  </mat-form-field>
+  <button mat-raised-button color="primary">Create</button>
+</form>

@@ -1,0 +1,5 @@
+<h1>Your events: </h1>
+
+<div *ngFor="let event of (events$ | async)">
+  <h2 routerLink="/event/{{event.id}}">{{event.name}}</h2>
+</div>

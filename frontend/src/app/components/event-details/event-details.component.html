@@ -1,0 +1,13 @@
+<div *ngIf="(selectedEvent$ | async) as event">
+  <h1>Event name: {{event.name}}</h1>
+  <h2>Organizer: {{event.organizer.name}}</h2>
+  <button (click)="openEditDialog()">Edit event details</button>
+  <h2>Total {{event.interested.length}} interested people:</h2>
+  <div *ngFor="let user of event.interested">
+    <p>{{user.name}} {{user.surname}}</p>
+  </div>
+  <h2>Total {{event.participants.length}} people will take part:</h2>
+  <div *ngFor="let user of event.participants">
+    <p>{{user.name}} {{user.surname}}</p>
+  </div>
+</div>

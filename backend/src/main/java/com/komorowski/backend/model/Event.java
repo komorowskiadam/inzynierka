@@ -5,7 +5,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.util.Collections;
 import java.util.List;
 
@@ -13,15 +12,20 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Party {
+public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
     private String name;
+
+    @OneToOne
+    private MyUser organizer;
 
     @OneToMany
     private List<MyUser> participants = Collections.emptyList();
+
+    @OneToMany
+    private List<MyUser> interested = Collections.emptyList();
 
 }

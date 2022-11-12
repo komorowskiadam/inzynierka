@@ -14,7 +14,9 @@ export class RegisterComponent implements OnInit {
 
   registerForm = this.formBuilder.group({
     username: ['', [Validators.required, Validators.minLength(4)]],
-    password: ['',[ Validators.required, Validators.minLength(4)]]
+    password: ['', [ Validators.required, Validators.minLength(4)]],
+    name: ['', [ Validators.required, Validators.minLength(3)]],
+    description: ['', Validators.required],
   });
 
   errorMessage = "";
@@ -28,11 +30,12 @@ export class RegisterComponent implements OnInit {
   }
 
   register() {
-
     let registerData: RegisterData = {
       username: this.registerForm.value.username || "",
       password: this.registerForm.value.password || "",
-      roles: ['admin']
+      roles: ['creator'],
+      name: this.registerForm.value.name || "",
+      description: this.registerForm.value.description || "",
     }
 
     this.authService.register(registerData).subscribe(response => {

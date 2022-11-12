@@ -1,9 +1,11 @@
 package com.komorowski.backend.repository;
 
-import com.komorowski.backend.model.Party;
+import com.komorowski.backend.model.Event;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
-public interface PartyRepository extends JpaRepository<Party, Long> {
+public interface EventRepository extends JpaRepository<Event, Long> {
 }

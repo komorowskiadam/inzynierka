@@ -5,7 +5,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.HashSet;
@@ -37,6 +36,10 @@ public class MyUser {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<MyRole> roles = new HashSet<>();
+
+    private String name;
+    private String surname;
+    private String description;
 
     public MyUser(String username, String password) {
         this.username = username;

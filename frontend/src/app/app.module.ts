@@ -14,6 +14,16 @@ import { httpInterceptorProviders } from "./services/http.interceptor";
 import { ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 import { MainPageComponent } from './components/main-page/main-page.component';
+import { CreateEventComponent } from './components/create-event/create-event.component';
+import { UserEventsListComponent } from './components/user-events-list/user-events-list.component';
+import { EventDetailsComponent } from './components/event-details/event-details.component';
+import { Store, StoreModule } from "@ngrx/store";
+import { EffectsModule } from "@ngrx/effects";
+import { ToastrModule } from "ngx-toastr";
+import { eventsReducer } from "./store/events/events.reducer";
+import { EventsEffects } from "./store/events/events.effects";
+import { EditEventComponent } from './components/edit-event/edit-event.component';
+import { MatDialogModule } from "@angular/material/dialog";
 
 @NgModule({
   declarations: [
@@ -21,7 +31,11 @@ import { MainPageComponent } from './components/main-page/main-page.component';
     LoginComponent,
     WelcomePageComponent,
     RegisterComponent,
-    MainPageComponent
+    MainPageComponent,
+    CreateEventComponent,
+    UserEventsListComponent,
+    EventDetailsComponent,
+    EditEventComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +45,15 @@ import { MainPageComponent } from './components/main-page/main-page.component';
     MatInputModule,
     MatButtonModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    StoreModule.forRoot({}),
+    StoreModule.forFeature("events", eventsReducer),
+    EffectsModule.forRoot([]),
+    EffectsModule.forFeature([EventsEffects]),
+    ToastrModule.forRoot({
+      positionClass: 'toast-bottom-right'
+    }),
+    MatDialogModule
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]
