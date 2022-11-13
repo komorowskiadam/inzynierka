@@ -1,6 +1,6 @@
 package com.komorowski.backend.controller;
 
-import com.komorowski.backend.model.ERole;
+import com.komorowski.backend.model.enums.ERole;
 import com.komorowski.backend.model.MyRole;
 import com.komorowski.backend.model.MyUser;
 import com.komorowski.backend.payload.request.LoginRequest;

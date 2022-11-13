@@ -1,6 +1,6 @@
 package com.komorowski.backend.service;
 
-import com.komorowski.backend.model.ERole;
+import com.komorowski.backend.model.enums.ERole;
 import com.komorowski.backend.model.MyRole;
 import com.komorowski.backend.model.MyUser;
 import com.komorowski.backend.repository.MyUserRepository;

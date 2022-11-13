@@ -1,3 +1,5 @@
+import { TicketPoolStatus } from "../model/Models";
+
 export interface LoginData {
   username: string;
   password: string;
@@ -29,4 +31,18 @@ export interface CreateEventDto {
 
 export interface EditEventDto {
   name: string;
+}
+
+export interface CreateTicketPoolDto {
+  quantity: number;
+  price: number;
+  poolName: string;
+}
+
+export interface ChangeTicketPoolStatusDto {
+  newStatus: TicketPoolStatus;
+}
+
+export interface ChangeTicketPoolQuantityDto {
+  quantity: number;
 }

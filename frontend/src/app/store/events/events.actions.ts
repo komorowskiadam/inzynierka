@@ -1,6 +1,12 @@
 import { createAction, props } from "@ngrx/store";
 import { MyEvent } from "../../model/Models";
-import { CreateEventDto, EditEventDto } from "../../dto/Dtos";
+import {
+  ChangeTicketPoolQuantityDto,
+  ChangeTicketPoolStatusDto,
+  CreateEventDto,
+  CreateTicketPoolDto,
+  EditEventDto
+} from "../../dto/Dtos";
 
 export enum EventActionTypes {
   GET_EVENT = '[Events] Get event',
@@ -16,6 +22,11 @@ export enum EventActionTypes {
   EDIT_EVENT = '[Events] Edit event',
   EDIT_EVENT_SUCCESS = '[Events] Edit event success',
   EDIT_EVENT_ERROR = '[Events] Edit event error',
+  CREATE_TICKET_POOL = '[Events] Create ticket pool',
+  CREATE_TICKET_POOL_SUCCESS = '[Events] Create ticket pool success',
+  CREATE_TICKET_POOL_ERROR = '[Events] Create ticket pool error',
+  CHANGE_TICKET_POOL_STATUS = '[Events] Change ticket pool status',
+  CHANGE_TICKET_POOL_QUANTITY = '[Events] Change ticket pool quantity',
 }
 
 export const getEvent = createAction(
@@ -81,4 +92,29 @@ export const editEventSuccess = createAction(
 export const editEventError = createAction(
   EventActionTypes.EDIT_EVENT_ERROR,
   props<{ message: string }>()
+);
+
+export const createTicketPool = createAction(
+  EventActionTypes.CREATE_TICKET_POOL,
+  props<{ eventId: number, createTicketPoolDto: CreateTicketPoolDto }>()
+);
+
+export const createTicketPoolSuccess = createAction(
+  EventActionTypes.CREATE_TICKET_POOL_SUCCESS,
+  props<{ event: MyEvent }>()
+);
+
+export const createTicketPoolError = createAction(
+  EventActionTypes.CREATE_TICKET_POOL_ERROR,
+  props<{ message: string }>()
+);
+
+export const changeTicketPoolStatus = createAction(
+  EventActionTypes.CHANGE_TICKET_POOL_STATUS,
+  props<{ eventId: number, poolId: number, status: ChangeTicketPoolStatusDto }>()
+);
+
+export const changeTicketPoolQuantity = createAction(
+  EventActionTypes.CHANGE_TICKET_POOL_QUANTITY,
+  props<{ eventId: number, poolId: number, quantity: ChangeTicketPoolQuantityDto }>()
 );

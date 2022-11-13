@@ -24,6 +24,10 @@ import { eventsReducer } from "./store/events/events.reducer";
 import { EventsEffects } from "./store/events/events.effects";
 import { EditEventComponent } from './components/edit-event/edit-event.component';
 import { MatDialogModule } from "@angular/material/dialog";
+import { CreateTicketPoolComponent } from './components/create-ticket-pool/create-ticket-pool.component';
+import { ChangeTicketPoolStatusComponent } from './components/change-ticket-pool-status/change-ticket-pool-status.component';
+import { MatSelectModule } from "@angular/material/select";
+import { ChangeTicketPoolQuantityComponent } from './components/change-ticket-pool-quantity/change-ticket-pool-quantity.component';
 
 @NgModule({
   declarations: [
@@ -35,26 +39,30 @@ import { MatDialogModule } from "@angular/material/dialog";
     CreateEventComponent,
     UserEventsListComponent,
     EventDetailsComponent,
-    EditEventComponent
+    EditEventComponent,
+    CreateTicketPoolComponent,
+    ChangeTicketPoolStatusComponent,
+    ChangeTicketPoolQuantityComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    StoreModule.forRoot({}),
-    StoreModule.forFeature("events", eventsReducer),
-    EffectsModule.forRoot([]),
-    EffectsModule.forFeature([EventsEffects]),
-    ToastrModule.forRoot({
-      positionClass: 'toast-bottom-right'
-    }),
-    MatDialogModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        StoreModule.forRoot({}),
+        StoreModule.forFeature("events", eventsReducer),
+        EffectsModule.forRoot([]),
+        EffectsModule.forFeature([EventsEffects]),
+        ToastrModule.forRoot({
+            positionClass: 'toast-bottom-right'
+        }),
+        MatDialogModule,
+        MatSelectModule
+    ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]
 })

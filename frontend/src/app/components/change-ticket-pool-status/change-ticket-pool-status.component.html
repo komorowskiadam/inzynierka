@@ -1,0 +1,15 @@
+<h1>Change pool status</h1>
+<form [formGroup]="statusForm" (ngSubmit)="changeStatus()">
+  <mat-form-field class="form-field" appearance="fill">
+    <mat-label>Status</mat-label>
+    <mat-select formControlName="status">
+      <mat-option *ngFor="let val of ticketPoolStatus" [value]="val">
+        {{TicketPoolStatus2LabelMapping[val]}}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="statusForm.get('status')?.hasError('required')">
+      Status is required.
+    </mat-error>
+  </mat-form-field>
+  <button mat-raised-button color="primary">Edit</button>
+</form>

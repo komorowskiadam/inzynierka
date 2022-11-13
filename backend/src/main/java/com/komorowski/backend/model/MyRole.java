@@ -1,5 +1,6 @@
 package com.komorowski.backend.model;
 
+import com.komorowski.backend.model.enums.ERole;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

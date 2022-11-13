@@ -28,4 +28,7 @@ public class Event {
     @OneToMany
     private List<MyUser> interested = Collections.emptyList();
 
+    @OneToMany
+    private List<TicketPool> ticketPools;
+
 }

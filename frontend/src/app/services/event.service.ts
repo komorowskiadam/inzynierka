@@ -1,6 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
-import { CreateEventDto, EditEventDto } from "../dto/Dtos";
+import {
+  ChangeTicketPoolQuantityDto,
+  ChangeTicketPoolStatusDto,
+  CreateEventDto,
+  CreateTicketPoolDto,
+  EditEventDto
+} from "../dto/Dtos";
 import { Observable } from "rxjs";
 import { MyEvent } from "../model/Models";
 
@@ -28,6 +34,18 @@ export class EventService {
 
   editEvent(id: number, editEventDto: EditEventDto): Observable<MyEvent> {
     return this.http.patch<MyEvent>(backendAddress + "/events" + "/edit/" + id, editEventDto);
+  }
+
+  createTicketPool(eventId: number, createTicketPoolDto: CreateTicketPoolDto) : Observable<MyEvent> {
+    return this.http.post<MyEvent>(backendAddress + "/events/" + eventId + "/createPool", createTicketPoolDto);
+  }
+
+  changeTicketPoolStatus(eventId: number, poolId: number, status: ChangeTicketPoolStatusDto): Observable<MyEvent> {
+    return this.http.post<MyEvent>(backendAddress + "/events/" + eventId + "/changePoolStatus/" + poolId, status);
+  }
+
+  changeTicketPoolQuantity(eventId: number, poolId: number, quantity: ChangeTicketPoolQuantityDto): Observable<MyEvent> {
+    return this.http.post<MyEvent>(backendAddress + "/events/" + eventId + "/changeTicketsQuantity/" + poolId, quantity);
   }
 
 }

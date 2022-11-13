@@ -5,7 +5,7 @@ import { Store } from "@ngrx/store";
 import { EventService } from "../../services/event.service";
 import {
   addEventError,
-  addEventSuccess, editEventError, editEventSuccess,
+  addEventSuccess, createTicketPoolError, createTicketPoolSuccess, editEventError, editEventSuccess,
   EventActionTypes,
   getEventError,
   getEventSuccess,
@@ -68,7 +68,49 @@ export class EventsEffects {
         return of(editEventError({message: err.message}));
       })
     ))
-  ))
+  ));
+
+  createTicketPool$ = createEffect(() => this.actions$.pipe(
+    ofType(EventActionTypes.CREATE_TICKET_POOL),
+    switchMap(({eventId, createTicketPoolDto}) => this.eventService.createTicketPool(eventId, createTicketPoolDto).pipe(
+      map(event => {
+        this.toastr.success("Ticket pool created successfully.");
+        return createTicketPoolSuccess({event});
+      }),
+      catchError(err => {
+        this.toastr.error("Could not create ticket pool. Error: " + err.message);
+        return of(createTicketPoolError({message: err.message}));
+      })
+    ))
+  ));
+
+  changeTicketPoolStatus$ = createEffect(() => this.actions$.pipe(
+    ofType(EventActionTypes.CHANGE_TICKET_POOL_STATUS),
+    switchMap(({eventId, poolId, status}) => this.eventService.changeTicketPoolStatus(eventId, poolId, status).pipe(
+      map(event => {
+        this.toastr.success("Ticket pool status changed successfully.");
+        return editEventSuccess({event});
+      }),
+      catchError(err => {
+        this.toastr.error("Could not change pool status. Error: " + err.message);
+        return of(editEventError({message: err.message}));
+      })
+    ))
+  ));
+
+  changeTicketPoolQuantity$ = createEffect(() => this.actions$.pipe(
+    ofType(EventActionTypes.CHANGE_TICKET_POOL_QUANTITY),
+    switchMap(({eventId, poolId, quantity}) => this.eventService.changeTicketPoolQuantity(eventId, poolId, quantity).pipe(
+      map(event => {
+        this.toastr.success("Tickets quantity in pool changed successfully.");
+        return editEventSuccess({event});
+      }),
+      catchError(err => {
+        this.toastr.error("Could not change ticket quantity in pool. Error: " + err.message);
+        return of(editEventError({message: err.message}));
+      })
+    ))
+  ));
 
   constructor(private actions$: Actions,
               private toastr: ToastrService,

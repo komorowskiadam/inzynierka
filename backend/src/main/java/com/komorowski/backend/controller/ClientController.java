@@ -49,11 +49,30 @@ public class ClientController {
                 .orElseThrow(() -> new RuntimeException("No user with that id."));
 
         if(userService.isCreator(user)) {
-            throw new RuntimeException("Creators can not be interested in event.");
+            throw new RuntimeException("Creators can not take part in event.");
         }
 
         event.getInterested().remove(user);
         event.getParticipants().add(user);
+        eventRepository.save(event);
+
+        return ResponseEntity.ok(event);
+    }
+
+    @DeleteMapping("removeMark/{eventId},{userId}")
+    public ResponseEntity<?> removeMarkFromEvent(@PathVariable Long eventId, @PathVariable Long userId) {
+        Event event = eventRepository.findById(eventId)
+                .orElseThrow(() -> new RuntimeException("No event with that id."));
+
+        MyUser user = myUserRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("No user with that id."));
+
+        if(userService.isCreator(user)) {
+            throw new RuntimeException("Creators can not be interested nor take part in event.");
+        }
+
+        event.getInterested().remove(user);
+        event.getParticipants().remove(user);
         eventRepository.save(event);
 
         return ResponseEntity.ok(event);

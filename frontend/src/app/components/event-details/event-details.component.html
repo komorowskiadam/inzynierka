@@ -10,4 +10,12 @@
   <div *ngFor="let user of event.participants">
     <p>{{user.name}} {{user.surname}}</p>
   </div>
+  <h2>Tickets: </h2><button (click)="openCreateTicketPoolDialog()">Create new ticket pool</button>
+  <div *ngFor="let ticketPool of event.ticketPools">
+    <button (click)="openChangePoolStatusDialog(ticketPool.id)">Change status</button>
+    <button (click)="openChangePoolQuantityDialog(ticketPool.id)">Change quantity of tickets</button>
+    <p><b>{{ticketPool.status}} </b>{{ticketPool.name}}: {{ticketPool.tickets.length}} tickets for {{ticketPool.tickets[0].price}}zł</p>
+    <p>{{getAvailableTickets(ticketPool.tickets)}} available</p>
+    <p>{{getSoldTickets(ticketPool.tickets)}} sold</p>
+  </div>
 </div>

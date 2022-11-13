@@ -2,7 +2,7 @@ import { createEntityAdapter, EntityState } from "@ngrx/entity";
 import { MyEvent } from "../../model/Models";
 import { createReducer, on } from "@ngrx/store";
 import {
-  addEventSuccess,
+  addEventSuccess, createTicketPoolSuccess,
   editEventSuccess,
   getEventSuccess,
   getUserEventsSuccess,
@@ -25,6 +25,7 @@ export const eventsReducer = createReducer(
   on(getEventSuccess, (state, action) => eventsAdapter.setOne(action.event, state)),
   on(addEventSuccess, (state, action) => eventsAdapter.addOne(action.event, state)),
   on(editEventSuccess, (state, action) => eventsAdapter.upsertOne(action.event, state)),
+  on(createTicketPoolSuccess, (state, action) => eventsAdapter.upsertOne(action.event, state)),
   on(selectEvent, (state, action) => ({...state, selectedEventId: action.id}))
 );
 

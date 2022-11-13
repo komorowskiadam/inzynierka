@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { EventService } from "../../services/event.service";
-import { MyEvent } from "../../model/Models";
+import { MyEvent, Ticket, TicketStatus } from "../../model/Models";
 import { Store } from "@ngrx/store";
 import { getUserEvents, selectEvent } from "../../store/events/events.actions";
 import { Observable } from "rxjs";
@@ -9,6 +9,11 @@ import { selectSelectedEvent } from "../../store/events/events.selectors";
 import { MatDialog } from "@angular/material/dialog";
 import { EditEventComponent } from "../edit-event/edit-event.component";
 import { TokenStorageService } from "../../services/token-storage.service";
+import { CreateTicketPoolComponent } from "../create-ticket-pool/create-ticket-pool.component";
+import { ChangeTicketPoolStatusComponent } from "../change-ticket-pool-status/change-ticket-pool-status.component";
+import {
+  ChangeTicketPoolQuantityComponent
+} from "../change-ticket-pool-quantity/change-ticket-pool-quantity.component";
 
 @Component({
   selector: 'app-event-details',
@@ -41,6 +46,55 @@ export class EventDetailsComponent implements OnInit {
       data: event,
       width: '500px'
     });
+  }
+
+  openCreateTicketPoolDialog() {
+    let event;
+    this.selectedEvent$.subscribe(res => event = res);
+
+    this.dialog.open(CreateTicketPoolComponent, {
+      data: event
+    });
+  }
+
+  openChangePoolStatusDialog(poolId: number) {
+    let event;
+    this.selectedEvent$.subscribe(res => event = res);
+
+    this.dialog.open(ChangeTicketPoolStatusComponent, {
+      data: {
+        event: event,
+        poolId: poolId
+      }
+    });
+  }
+
+  openChangePoolQuantityDialog(poolId: number) {
+    let event;
+    this.selectedEvent$.subscribe(res => event = res);
+
+    this.dialog.open(ChangeTicketPoolQuantityComponent, {
+      data: {
+        event: event,
+        poolId: poolId
+      }
+    });
+  }
+
+  getAvailableTickets(tickets: Ticket[]): number {
+    let number = 0;
+    for(let i in tickets){
+      if(tickets[i].status == TicketStatus.AVAILABLE) number++;
+    }
+    return number;
+  }
+
+  getSoldTickets(tickets: Ticket[]): number {
+    let number = 0;
+    for(let i in tickets){
+      if(tickets[i].status == TicketStatus.SOLD) number++;
+    }
+    return number;
   }
 
 }
