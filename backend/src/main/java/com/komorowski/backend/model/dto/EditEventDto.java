@@ -11,4 +11,5 @@ import lombok.Setter;
 @NoArgsConstructor
 public class EditEventDto {
     private String name;
+    private String description;
 }

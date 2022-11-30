@@ -5,6 +5,7 @@ export interface MyEvent {
   participants: MyUser[];
   interested: MyUser[];
   ticketPools: TicketPool[];
+  description: string;
 }
 
 export interface MyUser {

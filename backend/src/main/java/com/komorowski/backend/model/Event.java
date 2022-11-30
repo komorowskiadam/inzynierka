@@ -22,6 +22,8 @@ public class Event {
     @OneToOne
     private MyUser organizer;
 
+    private String description;
+
     @OneToMany
     private List<MyUser> participants = Collections.emptyList();
 

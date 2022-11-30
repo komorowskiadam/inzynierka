@@ -10,6 +10,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class NewTicketPoolStatusDto {
-    private TicketPoolStatus newStatus;
+public class EditTicketPoolDto {
+    private TicketPoolStatus status;
+    private String name;
 }

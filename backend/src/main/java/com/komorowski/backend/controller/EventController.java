@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -43,6 +42,7 @@ public class EventController {
         Event newEvent = new Event();
         newEvent.setOrganizer(organizer);
         newEvent.setName(createEventDto.getName());
+        newEvent.setDescription(createEventDto.getDescription());
         eventRepository.save(newEvent);
 
         return ResponseEntity.ok(newEvent);
@@ -73,6 +73,9 @@ public class EventController {
 
         if(editEventDto.getName() != null){
             event.setName(editEventDto.getName());
+        }
+        if(editEventDto.getDescription() != null){
+            event.setDescription(editEventDto.getDescription());
         }
         eventRepository.save(event);
 
@@ -109,23 +112,29 @@ public class EventController {
         return ResponseEntity.ok(event);
     }
 
-    @PostMapping("{eventId}/changePoolStatus/{poolId}")
-    public ResponseEntity<?> changeTicketPoolStatus(@PathVariable Long eventId,
+    @PatchMapping("{eventId}/editTicketPool/{poolId}")
+    public ResponseEntity<?> editTicketPool(@PathVariable Long eventId,
                                                     @PathVariable Long poolId,
-                                                    @RequestBody NewTicketPoolStatusDto newTicketPoolStatusDto) {
+                                                    @RequestBody EditTicketPoolDto editTicketPoolDto) {
         Event event = eventRepository.findById(eventId)
                 .orElseThrow(() -> new RuntimeException("No event with that id."));
 
         TicketPool ticketPool = ticketPoolRepository.findById(poolId)
                 .orElseThrow(() -> new RuntimeException("No ticket pool with that id."));
 
-        ticketPool.setStatus(newTicketPoolStatusDto.getNewStatus());
+        if (editTicketPoolDto.getStatus() != null) {
+            ticketPool.setStatus(editTicketPoolDto.getStatus());
+        }
+        if (editTicketPoolDto.getName() != null) {
+            ticketPool.setName(editTicketPoolDto.getName());
+        }
+
         ticketPoolRepository.save(ticketPool);
 
         return ResponseEntity.ok(event);
     }
 
-    @PostMapping("{eventId}/changeTicketsQuantity/{poolId}")
+    @PatchMapping("{eventId}/changeTicketsQuantity/{poolId}")
     public ResponseEntity<?> changeTicketPoolTicketsQuantity(@PathVariable Long eventId,
                                                              @PathVariable Long poolId,
                                                              @RequestBody ChangeTicketPoolQuantityDto newQuantityDto) {
@@ -146,7 +155,7 @@ public class EventController {
                     .filter(ticket -> ticket.getStatus().equals(TicketStatus.AVAILABLE))
                     .toList();
 
-            if (availableTickets.size() < amount * -1) {
+            if (availableTickets.size() <= amount * -1) {
                 return ResponseEntity.badRequest().body("Can not reduce number of tickets because there is too few available tickets.");
             }
 

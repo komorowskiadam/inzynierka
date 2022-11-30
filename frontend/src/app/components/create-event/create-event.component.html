@@ -10,5 +10,11 @@
       Name should have at least 5 characters.
     </mat-error>
   </mat-form-field>
+  <label>Description: </label>
+  <editor [init]="{ plugins: 'lists link image table code wordcount', menubar: false, width: 700}"
+          apiKey="pwnpv1kjtjd4u7ea5pzlsqwuhipujq2i0rsg7sdqlfkrsaq7"
+          formControlName="description">
+  </editor>
+
   <button mat-raised-button color="primary">Create</button>
 </form>

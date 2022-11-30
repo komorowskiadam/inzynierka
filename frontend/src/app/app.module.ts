@@ -25,9 +25,10 @@ import { EventsEffects } from "./store/events/events.effects";
 import { EditEventComponent } from './components/edit-event/edit-event.component';
 import { MatDialogModule } from "@angular/material/dialog";
 import { CreateTicketPoolComponent } from './components/create-ticket-pool/create-ticket-pool.component';
-import { ChangeTicketPoolStatusComponent } from './components/change-ticket-pool-status/change-ticket-pool-status.component';
+import { EditTicketPoolComponent } from './components/edit-ticket-pool/edit-ticket-pool.component';
 import { MatSelectModule } from "@angular/material/select";
 import { ChangeTicketPoolQuantityComponent } from './components/change-ticket-pool-quantity/change-ticket-pool-quantity.component';
+import { EditorModule } from "@tinymce/tinymce-angular";
 
 @NgModule({
   declarations: [
@@ -41,7 +42,7 @@ import { ChangeTicketPoolQuantityComponent } from './components/change-ticket-po
     EventDetailsComponent,
     EditEventComponent,
     CreateTicketPoolComponent,
-    ChangeTicketPoolStatusComponent,
+    EditTicketPoolComponent,
     ChangeTicketPoolQuantityComponent
   ],
     imports: [
@@ -61,7 +62,8 @@ import { ChangeTicketPoolQuantityComponent } from './components/change-ticket-po
             positionClass: 'toast-bottom-right'
         }),
         MatDialogModule,
-        MatSelectModule
+        MatSelectModule,
+        EditorModule
     ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]

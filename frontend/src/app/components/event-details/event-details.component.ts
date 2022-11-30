@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { EventService } from "../../services/event.service";
-import { MyEvent, Ticket, TicketStatus } from "../../model/Models";
+import { MyEvent, Ticket, TicketPoolStatus2LabelMapping, TicketStatus } from "../../model/Models";
 import { Store } from "@ngrx/store";
 import { getUserEvents, selectEvent } from "../../store/events/events.actions";
 import { Observable } from "rxjs";
@@ -10,7 +10,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { EditEventComponent } from "../edit-event/edit-event.component";
 import { TokenStorageService } from "../../services/token-storage.service";
 import { CreateTicketPoolComponent } from "../create-ticket-pool/create-ticket-pool.component";
-import { ChangeTicketPoolStatusComponent } from "../change-ticket-pool-status/change-ticket-pool-status.component";
+import { EditTicketPoolComponent } from "../edit-ticket-pool/edit-ticket-pool.component";
 import {
   ChangeTicketPoolQuantityComponent
 } from "../change-ticket-pool-quantity/change-ticket-pool-quantity.component";
@@ -21,6 +21,8 @@ import {
   styleUrls: ['./event-details.component.scss']
 })
 export class EventDetailsComponent implements OnInit {
+
+  public TicketPoolStatus2LabelMapping = TicketPoolStatus2LabelMapping;
 
   selectedEvent$: Observable<MyEvent | undefined>;
 
@@ -57,11 +59,11 @@ export class EventDetailsComponent implements OnInit {
     });
   }
 
-  openChangePoolStatusDialog(poolId: number) {
+  openEditTicketPoolDialog(poolId: number) {
     let event;
     this.selectedEvent$.subscribe(res => event = res);
 
-    this.dialog.open(ChangeTicketPoolStatusComponent, {
+    this.dialog.open(EditTicketPoolComponent, {
       data: {
         event: event,
         poolId: poolId

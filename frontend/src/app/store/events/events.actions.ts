@@ -2,7 +2,7 @@ import { createAction, props } from "@ngrx/store";
 import { MyEvent } from "../../model/Models";
 import {
   ChangeTicketPoolQuantityDto,
-  ChangeTicketPoolStatusDto,
+  EditTicketPoolDto,
   CreateEventDto,
   CreateTicketPoolDto,
   EditEventDto
@@ -111,7 +111,7 @@ export const createTicketPoolError = createAction(
 
 export const changeTicketPoolStatus = createAction(
   EventActionTypes.CHANGE_TICKET_POOL_STATUS,
-  props<{ eventId: number, poolId: number, status: ChangeTicketPoolStatusDto }>()
+  props<{ eventId: number, poolId: number, status: EditTicketPoolDto }>()
 );
 
 export const changeTicketPoolQuantity = createAction(

@@ -27,10 +27,12 @@ export interface JwtResponse {
 export interface CreateEventDto {
   organizerId: number;
   name: string;
+  description: string;
 }
 
 export interface EditEventDto {
   name: string;
+  description: string;
 }
 
 export interface CreateTicketPoolDto {
@@ -39,8 +41,9 @@ export interface CreateTicketPoolDto {
   poolName: string;
 }
 
-export interface ChangeTicketPoolStatusDto {
-  newStatus: TicketPoolStatus;
+export interface EditTicketPoolDto {
+  status: TicketPoolStatus;
+  name: string;
 }
 
 export interface ChangeTicketPoolQuantityDto {

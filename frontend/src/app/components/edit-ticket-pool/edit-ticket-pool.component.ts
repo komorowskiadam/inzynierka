@@ -3,18 +3,19 @@ import { FormBuilder, Validators } from "@angular/forms";
 import { Store } from "@ngrx/store";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { MyEvent, TicketPool, TicketPoolStatus, TicketPoolStatus2LabelMapping } from "../../model/Models";
-import { ChangeTicketPoolStatusDto } from "../../dto/Dtos";
+import { EditTicketPoolDto } from "../../dto/Dtos";
 import { changeTicketPoolStatus } from "../../store/events/events.actions";
 
 @Component({
   selector: 'app-change-ticket-pool-status',
-  templateUrl: './change-ticket-pool-status.component.html',
-  styleUrls: ['./change-ticket-pool-status.component.scss']
+  templateUrl: './edit-ticket-pool.component.html',
+  styleUrls: ['./edit-ticket-pool.component.scss']
 })
-export class ChangeTicketPoolStatusComponent {
+export class EditTicketPoolComponent {
 
   statusForm = this.formBuilder.group({
-    status: ['', Validators.required]
+    status: ['', Validators.required],
+    name: ['', [Validators.required, Validators.minLength(5)]],
   });
 
   selectedPool: TicketPool;
@@ -25,17 +26,19 @@ export class ChangeTicketPoolStatusComponent {
 
   constructor(private formBuilder: FormBuilder,
               private store$: Store,
-              private dialogRef: MatDialogRef<ChangeTicketPoolStatusComponent>,
+              private dialogRef: MatDialogRef<EditTicketPoolComponent>,
               @Inject(MAT_DIALOG_DATA) public data: { event: MyEvent, poolId: number }) {
     this.selectedPool = this.data.event.ticketPools.filter(p => p.id == this.data.poolId)[0];
-    this.statusForm.setValue({status: this.selectedPool.status});
+    this.statusForm.setValue({status: this.selectedPool.status, name: this.selectedPool.name});
   }
 
   changeStatus() {
     let status = this.statusForm.value.status as unknown as TicketPoolStatus;
+    let name = this.statusForm.value.name as unknown as string;
 
-    let dto: ChangeTicketPoolStatusDto = {
-      newStatus: status
+    let dto: EditTicketPoolDto = {
+      status,
+      name
     }
 
     this.store$.dispatch(changeTicketPoolStatus({

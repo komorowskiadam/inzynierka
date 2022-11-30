@@ -86,14 +86,14 @@ export class EventsEffects {
 
   changeTicketPoolStatus$ = createEffect(() => this.actions$.pipe(
     ofType(EventActionTypes.CHANGE_TICKET_POOL_STATUS),
-    switchMap(({eventId, poolId, status}) => this.eventService.changeTicketPoolStatus(eventId, poolId, status).pipe(
+    switchMap(({eventId, poolId, status}) => this.eventService.editTicketPool(eventId, poolId, status).pipe(
       map(event => {
         this.toastr.success("Ticket pool status changed successfully.");
         return editEventSuccess({event});
       }),
       catchError(err => {
-        this.toastr.error("Could not change pool status. Error: " + err.message);
-        return of(editEventError({message: err.message}));
+        this.toastr.error("Could not change pool status. Error: " + err.error);
+        return of(editEventError({message: err.error}));
       })
     ))
   ));
@@ -106,8 +106,9 @@ export class EventsEffects {
         return editEventSuccess({event});
       }),
       catchError(err => {
-        this.toastr.error("Could not change ticket quantity in pool. Error: " + err.message);
-        return of(editEventError({message: err.message}));
+        this.toastr.error("Could not change ticket quantity in pool. Error: " + err.error);
+        console.log(err)
+        return of(editEventError({message: err.error}));
       })
     ))
   ));

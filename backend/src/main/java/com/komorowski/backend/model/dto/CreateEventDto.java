@@ -12,5 +12,5 @@ import lombok.Setter;
 public class CreateEventDto {
     private String name;
     private Long organizerId;
-
+    private String description;
 }

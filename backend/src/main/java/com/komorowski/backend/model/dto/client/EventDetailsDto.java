@@ -1,0 +1,19 @@
+package com.komorowski.backend.model.dto.client;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.List;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class EventDetailsDto {
+    private Long id;
+    private String name;
+    private String description;
+    private List<TicketPoolDto> ticketPools;
+}

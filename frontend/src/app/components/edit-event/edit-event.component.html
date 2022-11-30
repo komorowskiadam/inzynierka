@@ -10,5 +10,11 @@
       Name should have at least 5 characters.
     </mat-error>
   </mat-form-field>
-  <button mat-raised-button color="primary">Edit</button>
+  <div class="mat-form-field-wrapper">
+    <editor [init]="{ plugins: 'lists link image table code wordcount', menubar: false, width: 450, setup: setup}"
+            apiKey="pwnpv1kjtjd4u7ea5pzlsqwuhipujq2i0rsg7sdqlfkrsaq7"
+            formControlName="description">
+    </editor>
+  </div>
+  <button mat-raised-button color="primary" [disabled]="isFormInvalid()">Edit</button>
 </form>

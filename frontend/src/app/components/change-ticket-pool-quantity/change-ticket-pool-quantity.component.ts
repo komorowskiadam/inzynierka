@@ -3,7 +3,7 @@ import { FormBuilder, Validators } from "@angular/forms";
 import { Store } from "@ngrx/store";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { MyEvent } from "../../model/Models";
-import { ChangeTicketPoolStatusComponent } from "../change-ticket-pool-status/change-ticket-pool-status.component";
+import { EditTicketPoolComponent } from "../edit-ticket-pool/edit-ticket-pool.component";
 import { ChangeTicketPoolQuantityDto } from "../../dto/Dtos";
 import { changeTicketPoolQuantity } from "../../store/events/events.actions";
 

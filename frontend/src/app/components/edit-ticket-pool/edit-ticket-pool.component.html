@@ -11,5 +11,15 @@
       Status is required.
     </mat-error>
   </mat-form-field>
+  <mat-form-field class="form-field" appearance="fill">
+    <mat-label>Name</mat-label>
+    <input matInput type="text" formControlName="name" required />
+    <mat-error *ngIf="statusForm.get('name')?.hasError('required')">
+      Name is required.
+    </mat-error>
+    <mat-error *ngIf="statusForm.get('name')?.hasError('minlength')">
+      Name should have at least 5 characters.
+    </mat-error>
+  </mat-form-field>
   <button mat-raised-button color="primary">Edit</button>
 </form>
