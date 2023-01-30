@@ -1,0 +1,21 @@
+@import "../../variables";
+
+.content {
+  width: 100%;
+  height: calc(100% - 103px);
+  background: linear-gradient($colorPink, $colorViolet);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  padding: 20px;
+  width: 50%;
+  background-color: white;
+  border-radius: 20px;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

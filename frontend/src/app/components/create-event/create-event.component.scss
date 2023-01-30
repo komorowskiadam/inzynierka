@@ -1,0 +1,74 @@
+@import "../../variables";
+
+.content {
+  width: 100%;
+  height: calc(100% - 103px);
+  background: linear-gradient($colorPink, $colorViolet);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  background-color: white;
+  width: 70%;
+  height: 80% ;
+  padding: 15px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: row;
+}
+
+.form-container {
+  width: 60%;
+  overflow-y: scroll;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  h1 {
+    font-weight: lighter;
+    font-size: 32px;
+  }
+
+  .form-field {
+    width: 100%;
+  }
+
+  button[type=submit] {
+    width: 50%;
+    margin-left: 25%;
+  }
+}
+
+.preview-container {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-left: 30px;
+
+  h1 {
+    font-weight: lighter;
+    font-size: 32px;
+  }
+}
+
+.event-preview {
+  width: 360px;
+  height: 650px;
+  border: 2px solid black;
+  background-color: white;
+
+  &__image {
+    width: 100%;
+    height: 180px;
+    background-size: cover;
+    border-bottom: 1px solid black;
+  }
+}
+
+.event-info {
+  padding: 10px;
+}

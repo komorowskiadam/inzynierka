@@ -29,6 +29,17 @@ import { EditTicketPoolComponent } from './components/edit-ticket-pool/edit-tick
 import { MatSelectModule } from "@angular/material/select";
 import { ChangeTicketPoolQuantityComponent } from './components/change-ticket-pool-quantity/change-ticket-pool-quantity.component';
 import { EditorModule } from "@tinymce/tinymce-angular";
+import { SanitizerPipe } from "./services/sanitizer.pipe";
+import { CreateNewPostComponent } from './components/create-new-post/create-new-post.component';
+import { CreatePromotionComponent } from './components/create-promotion/create-promotion.component';
+import { promotionsReducer } from "./store/promotions/promotions.reducer";
+import { PromotionsComponent } from './components/promotions/promotions.component';
+import { PromotionsEffects } from "./store/promotions/promotions.effects";
+import { EditPromotionComponent } from './components/edit-promotion/edit-promotion.component';
+import { MatIconModule } from "@angular/material/icon";
+import { MatTooltipModule } from "@angular/material/tooltip";
+import { HeaderComponent } from './components/header/header.component';
+import { UserDetailsComponent } from './components/user-details/user-details.component';
 
 @NgModule({
   declarations: [
@@ -43,28 +54,38 @@ import { EditorModule } from "@tinymce/tinymce-angular";
     EditEventComponent,
     CreateTicketPoolComponent,
     EditTicketPoolComponent,
-    ChangeTicketPoolQuantityComponent
+    ChangeTicketPoolQuantityComponent,
+    SanitizerPipe,
+    CreateNewPostComponent,
+    CreatePromotionComponent,
+    PromotionsComponent,
+    EditPromotionComponent,
+    HeaderComponent,
+    UserDetailsComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatButtonModule,
-        ReactiveFormsModule,
-        HttpClientModule,
-        StoreModule.forRoot({}),
-        StoreModule.forFeature("events", eventsReducer),
-        EffectsModule.forRoot([]),
-        EffectsModule.forFeature([EventsEffects]),
-        ToastrModule.forRoot({
-            positionClass: 'toast-bottom-right'
-        }),
-        MatDialogModule,
-        MatSelectModule,
-        EditorModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    StoreModule.forRoot({}),
+    StoreModule.forFeature("events", eventsReducer),
+    StoreModule.forFeature("promotions", promotionsReducer),
+    EffectsModule.forRoot([]),
+    EffectsModule.forFeature([EventsEffects, PromotionsEffects]),
+    ToastrModule.forRoot({
+      positionClass: 'toast-bottom-right'
+    }),
+    MatDialogModule,
+    MatSelectModule,
+    EditorModule,
+    MatIconModule,
+    MatTooltipModule,
+  ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]
 })

@@ -1,0 +1,46 @@
+@import "../../variables";
+
+.content {
+  width: 100%;
+  height: calc(100% - 103px);
+  background: linear-gradient($colorPink, $colorViolet);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  padding: 20px;
+  width: 40%;
+  background-color: white;
+  border-radius: 20px;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: scroll;
+}
+
+h1 {
+  font-size: 32px;
+  font-weight: lighter;
+}
+
+img {
+  border-radius: 50%;
+  width: 200px;
+}
+
+h2 {
+  font-size: 28px;
+  font-weight: lighter;
+  margin-top: 20px;
+
+  span {
+    font-weight: bolder;
+  }
+}
+
+button {
+  margin-top: 40px;
+}

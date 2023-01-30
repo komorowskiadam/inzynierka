@@ -22,9 +22,18 @@ public class Ticket {
 
     private Long price;
 
+    private Long eventId;
+
     private TicketStatus status = TicketStatus.AVAILABLE;
+
+    private Integer seatNumber;
 
     public Ticket(Long price){
         this.price = price;
+    }
+
+    public Ticket(Long price, Integer seatNumber){
+        this.price = price;
+        this.seatNumber = seatNumber;
     }
 }

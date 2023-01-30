@@ -5,7 +5,14 @@ export interface MyEvent {
   participants: MyUser[];
   interested: MyUser[];
   ticketPools: TicketPool[];
+  posts: EventPost[];
+  location: string;
   description: string;
+  timeStart: string;
+  dateStart: string;
+  timeEnd?: string;
+  dateEnd?: string;
+  imageId?: number;
 }
 
 export interface MyUser {
@@ -24,6 +31,7 @@ export interface Ticket {
   id: number;
   price: number;
   status: TicketStatus;
+  seatNumber?: number;
 }
 
 export interface TicketPool {
@@ -31,6 +39,7 @@ export interface TicketPool {
   tickets: Ticket[];
   name: string;
   status: TicketPoolStatus;
+  seatReservation: boolean;
 }
 
 export enum TicketStatus {
@@ -48,4 +57,35 @@ export const TicketPoolStatus2LabelMapping: Record<TicketPoolStatus, string> = {
   [TicketPoolStatus.ACTIVE]: "Active",
   [TicketPoolStatus.INACTIVE]: "Inactive",
   [TicketPoolStatus.SOLD_OUT]: "Sold out",
+}
+
+export interface EventPost {
+  id: number;
+  date: string;
+  content: string;
+  author: MyUser;
+  likes: any[];
+}
+
+export interface Promotion {
+  id: number;
+  event: MyEvent;
+  dateStart: string;
+  dateEnd: string;
+  status: PromotionStatus;
+  visits: number;
+}
+
+export enum PromotionStatus {
+  PENDING = "PENDING",
+  ACTIVE = "ACTIVE",
+  PAUSED = "PAUSED",
+  INACTIVE = "INACTIVE",
+}
+
+export const PromotionStatus2LabelMapping: Record<PromotionStatus, string> = {
+  [PromotionStatus.PENDING]: "Pending",
+  [PromotionStatus.ACTIVE]: "Active",
+  [PromotionStatus.PAUSED]: "Paused",
+  [PromotionStatus.INACTIVE]: "Inactive"
 }

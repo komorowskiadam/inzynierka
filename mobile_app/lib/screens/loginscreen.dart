@@ -11,8 +11,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key? key, required this.errMsg}) : super(key: key);
-  final String errMsg;
+  const LoginScreen({Key? key}) : super(key: key);
   static const String _title = 'Login';
 
   @override
@@ -40,13 +39,48 @@ class _StatefulLoginWidget extends State<StatefulLoginWidget> {
   final _passwordController = TextEditingController();
   bool isLoading = false;
 
+  static const _labelStyle = TextStyle(
+      height: 1.171875,
+      fontSize: 24.0,
+      fontFamily: 'Roboto',
+      fontWeight: FontWeight.w300,
+      color: Constants.colorViolet);
+
+  static const _hintStyle = TextStyle(
+      height: 1.171875,
+      fontSize: 24.0,
+      fontFamily: 'Roboto',
+      fontWeight: FontWeight.w300,
+      color: Constants.colorViolet);
+
+  static const _errorStyle = TextStyle(color: Constants.colorViolet);
+  static const _fillColor = Colors.white;
+  static const _formInputPadding =
+      EdgeInsets.symmetric(horizontal: 30, vertical: 5);
+
+  static const _enabledBorder = OutlineInputBorder(
+    borderRadius: BorderRadius.all(Radius.circular(5.0)),
+    borderSide: BorderSide(color: Constants.colorViolet, width: 2),
+  );
+  static const _focusedBorder = OutlineInputBorder(
+    borderRadius: BorderRadius.all(Radius.circular(5.0)),
+    borderSide: BorderSide(color: Constants.colorViolet, width: 2),
+  );
+  static const _buttonLabel = Text('LOGIN',
+      style: TextStyle(
+        height: 1.171875,
+        fontSize: 24.0,
+        fontFamily: 'Roboto',
+        fontWeight: FontWeight.w400,
+        color: Colors.white,
+      ));
+
   void checkToken() async {
     var token = await storage.read(key: "token");
-    // if (token != null) {
-    //   // ignore: use_build_context_synchronously
-    //   Navigator.pushReplacement(
-    //       context, SlideRightRoute(page: const HomeScreen()));
-    // }
+    if (token != null) {
+      storage.delete(key: "token");
+      storage.delete(key: "userId");
+    }
   }
 
   @override
@@ -71,15 +105,14 @@ class _StatefulLoginWidget extends State<StatefulLoginWidget> {
                   overflow: TextOverflow.visible,
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                      fontSize: 22.0,
+                      fontSize: 24.0,
                       fontFamily: 'Roboto',
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w400,
                       color: Colors.white),
                 ),
               ),
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+                padding: _formInputPadding,
                 child: TextFormField(
                   controller: _usernameController,
                   validator: (value) {
@@ -91,49 +124,30 @@ class _StatefulLoginWidget extends State<StatefulLoginWidget> {
                   autocorrect: true,
                   keyboardType: TextInputType.emailAddress,
                   decoration: const InputDecoration(
-                    errorStyle: TextStyle(color: Constants.colorViolet),
-                    fillColor: Color.fromARGB(255, 0, 0, 0),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                      borderSide: BorderSide(
-                          color: Color.fromARGB(255, 128, 255, 0), width: 1),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                      borderSide: BorderSide(
-                          color: Color.fromARGB(255, 235, 235, 235), width: 1),
-                    ),
+                    errorStyle: _errorStyle,
+                    fillColor: _fillColor,
+                    enabledBorder: _enabledBorder,
+                    focusedBorder: _focusedBorder,
                     labelText: 'Username',
                     hintText: 'Username',
                     prefixIcon: Padding(
                       padding: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
                       child: Icon(
                         Icons.email,
-                        color: Color.fromARGB(255, 128, 255, 0),
+                        color: Constants.colorViolet,
                         size: 24,
                       ),
                     ),
-                    labelStyle: TextStyle(
-                        height: 1.171875,
-                        fontSize: 24.0,
-                        fontFamily: 'Roboto',
-                        fontWeight: FontWeight.w300,
-                        color: Color.fromARGB(255, 128, 255, 0)),
-                    hintStyle: TextStyle(
-                        height: 1.171875,
-                        fontSize: 24.0,
-                        fontFamily: 'Roboto',
-                        fontWeight: FontWeight.w300,
-                        color: Color.fromARGB(255, 128, 255, 0)),
+                    labelStyle: _labelStyle,
+                    hintStyle: _hintStyle,
                     filled: true,
                   ),
                   style: const TextStyle(
-                      color: Color.fromARGB(255, 128, 255, 0), fontSize: 24.0),
+                      color: Constants.colorViolet, fontSize: 24.0),
                 ),
               ),
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+                padding: _formInputPadding,
                 child: TextFormField(
                   controller: _passwordController,
                   validator: (value) {
@@ -148,46 +162,26 @@ class _StatefulLoginWidget extends State<StatefulLoginWidget> {
                   obscureText: true,
                   keyboardType: TextInputType.emailAddress,
                   decoration: const InputDecoration(
-                    errorStyle:
-                        TextStyle(color: Color.fromARGB(255, 26, 255, 1)),
-                    fillColor: Color.fromARGB(255, 0, 0, 0),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                      borderSide: BorderSide(
-                          color: Color.fromARGB(255, 128, 255, 0), width: 1),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                      borderSide: BorderSide(
-                          color: Color.fromARGB(255, 235, 235, 235), width: 1),
-                    ),
+                    errorStyle: _errorStyle,
+                    fillColor: _fillColor,
+                    enabledBorder: _enabledBorder,
+                    focusedBorder: _focusedBorder,
                     labelText: 'Password',
                     hintText: 'Password',
                     prefixIcon: Padding(
                       padding: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
                       child: Icon(
                         Icons.password,
-                        color: Color.fromARGB(255, 128, 255, 0),
+                        color: Constants.colorViolet,
                         size: 24,
                       ),
                     ),
-                    labelStyle: TextStyle(
-                        height: 1.171875,
-                        fontSize: 24.0,
-                        fontFamily: 'Roboto',
-                        fontWeight: FontWeight.w300,
-                        color: Color.fromARGB(255, 128, 255, 0)),
-                    hintStyle: TextStyle(
-                        height: 1.171875,
-                        fontSize: 24.0,
-                        fontFamily: 'Roboto',
-                        fontWeight: FontWeight.w300,
-                        color: Color.fromARGB(255, 128, 255, 0)),
+                    labelStyle: _labelStyle,
+                    hintStyle: _hintStyle,
                     filled: true,
                   ),
                   style: const TextStyle(
-                      color: Color.fromARGB(255, 235, 235, 235),
-                      fontSize: 24.0),
+                      color: Constants.colorViolet, fontSize: 24.0),
                 ),
               ),
               Padding(
@@ -199,7 +193,7 @@ class _StatefulLoginWidget extends State<StatefulLoginWidget> {
                   child: ElevatedButton.icon(
                     icon: const Icon(
                       Icons.login,
-                      color: Color.fromARGB(255, 0, 0, 0),
+                      color: Colors.white,
                       size: 24.0,
                     ),
                     style: ButtonStyle(
@@ -207,11 +201,10 @@ class _StatefulLoginWidget extends State<StatefulLoginWidget> {
                           RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5.0),
                         side: const BorderSide(
-                            color: Color.fromARGB(255, 128, 255, 0),
-                            width: 1.0),
+                            color: Constants.colorViolet, width: 1.0),
                       )),
                       backgroundColor: MaterialStateProperty.all<Color>(
-                          const Color.fromARGB(255, 255, 200, 0)),
+                          Constants.colorViolet),
                     ),
                     onPressed: () async {
                       if (_loginFormKey.currentState == null) {
@@ -232,8 +225,14 @@ class _StatefulLoginWidget extends State<StatefulLoginWidget> {
                               EasyLoading.dismiss();
                               var data = jsonDecode(res.body);
                               storage.write(key: "token", value: data['token']);
-                              Navigator.pushReplacement(context,
-                                  SlideRightRoute(page: const HomeScreen()));
+                              storage.write(
+                                  key: "userId", value: "${data['id']}");
+                              Navigator.pushReplacement(
+                                  context,
+                                  SlideRightRoute(
+                                      page: const HomeScreen(
+                                    index: 0,
+                                  )));
                               break;
                             case 401:
                               EasyLoading.dismiss();
@@ -253,14 +252,7 @@ class _StatefulLoginWidget extends State<StatefulLoginWidget> {
                         }
                       }
                     },
-                    label: const Text('LOGIN',
-                        style: TextStyle(
-                          height: 1.171875,
-                          fontSize: 24.0,
-                          fontFamily: 'Roboto',
-                          fontWeight: FontWeight.w400,
-                          color: Color.fromARGB(255, 0, 0, 0),
-                        )),
+                    label: _buttonLabel,
                   ),
                 ),
               ),
@@ -268,22 +260,14 @@ class _StatefulLoginWidget extends State<StatefulLoginWidget> {
                 padding: const EdgeInsets.all(30),
                 child: RichText(
                   text: TextSpan(
-                    text: 'Not registered? ',
+                    text: 'Not registered? Register ',
                     style: const TextStyle(
                       fontSize: 18.0,
                       fontFamily: 'Roboto',
                       fontWeight: FontWeight.w300,
-                      color: Color.fromARGB(255, 0, 0, 0),
+                      color: Colors.white,
                     ),
                     children: <TextSpan>[
-                      const TextSpan(
-                          text: 'Register ',
-                          style: TextStyle(
-                            fontSize: 18.0,
-                            fontFamily: 'Roboto',
-                            fontWeight: FontWeight.w300,
-                            color: Color.fromARGB(255, 0, 0, 0),
-                          )),
                       TextSpan(
                           text: 'here ',
                           recognizer: TapGestureRecognizer()
@@ -297,7 +281,7 @@ class _StatefulLoginWidget extends State<StatefulLoginWidget> {
                             fontSize: 18.0,
                             fontFamily: 'Roboto',
                             fontWeight: FontWeight.w700,
-                            color: Color.fromARGB(255, 128, 255, 0),
+                            color: Constants.colorViolet,
                           )),
                     ],
                   ),

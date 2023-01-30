@@ -4,6 +4,7 @@ import { ToastrService } from "ngx-toastr";
 import { Store } from "@ngrx/store";
 import { EventService } from "../../services/event.service";
 import {
+  addEvent,
   addEventError,
   addEventSuccess, createTicketPoolError, createTicketPoolSuccess, editEventError, editEventSuccess,
   EventActionTypes,
@@ -107,8 +108,34 @@ export class EventsEffects {
       }),
       catchError(err => {
         this.toastr.error("Could not change ticket quantity in pool. Error: " + err.error);
-        console.log(err)
         return of(editEventError({message: err.error}));
+      })
+    ))
+  ));
+
+  createEventPost$ = createEffect(() => this.actions$.pipe(
+    ofType(EventActionTypes.CREATE_EVENT_POST),
+    switchMap(({eventId, dto}) => this.eventService.createEventPost(eventId, dto).pipe(
+      map(event => {
+        this.toastr.success("Post created successfully.");
+        return editEventSuccess({event});
+      }),
+      catchError(err => {
+        this.toastr.error("Could not create post. Error: " + err.error);
+        return of(editEventError({message: err.error}));
+      })
+    ))
+  ));
+
+  addEventImage$ = createEffect(() => this.actions$.pipe(
+    ofType(EventActionTypes.ADD_EVENT_IMAGE),
+    switchMap(({eventDto, image}: {eventDto: CreateEventDto, image: FormData}) => this.eventService.uploadImage(image).pipe(
+      map((imageId) => {
+        return addEvent({createEventDto: {...eventDto, imageId}});
+      }),
+      catchError(err => {
+        this.toastr.error("Could not upload image. Error: " + err.message);
+        return of(addEventError({message: err.message}))
       })
     ))
   ));

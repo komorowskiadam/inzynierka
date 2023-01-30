@@ -15,4 +15,6 @@ public class CreateTicketPoolDto {
     private Long price;
 
     private String poolName;
+
+    private Integer startSeatNumber;
 }

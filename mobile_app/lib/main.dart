@@ -37,11 +37,9 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/Login',
       routes: {
-        '/Login': (context) => const LoginScreen(
-              errMsg: '',
-            ),
+        '/Login': (context) => const LoginScreen(),
         '/Register': (context) => const RegisterScreen(),
-        '/Home': (context) => const HomeScreen(),
+        '/Home': (context) => const HomeScreen(index: 0),
       },
       builder: EasyLoading.init(),
     );

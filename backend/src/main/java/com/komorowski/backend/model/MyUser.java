@@ -7,7 +7,9 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -40,6 +42,9 @@ public class MyUser {
     private String name;
     private String surname;
     private String description;
+
+    @OneToMany
+    private List<Ticket> tickets = new ArrayList<>();
 
     public MyUser(String username, String password) {
         this.username = username;

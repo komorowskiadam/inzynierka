@@ -23,9 +23,4 @@ export class MainPageComponent implements OnInit {
     });
   }
 
-  logout(){
-    this.tokenStorage.clear();
-    this.router.navigate(['/']);
-  }
-
 }

@@ -1,0 +1,31 @@
+<div class="content">
+  <div class="container">
+    <h1>Your promoted events</h1>
+    <div *ngFor="let promotion of (promotions$ | async)" class="promotion">
+      <img [src]="getUrl(promotion.event)" class="promotion__background-image">
+      <div class="promotion__wrapper">
+        <div class="promotion__header-container">
+          <p class="event-name">Promotion of {{promotion.event.name}}</p>
+          <div class="promotion__button-wrapper">
+            <button mat-raised-button color="primary" *ngIf="showPausePromotionButton(promotion)" (click)="pausePromotion(promotion)">Pause</button>
+            <button mat-raised-button color="primary" *ngIf="showStartPromotionButton(promotion)" (click)="startPromotion(promotion)">Activate</button>
+            <button mat-raised-button color="primary" *ngIf="showDeactivatePromotionButton(promotion)" (click)="deactivatePromotion(promotion)">
+              Turn off <mat-icon matTooltip="You will not be able to activate this promotion again.">info</mat-icon>
+            </button>
+            <button mat-raised-button color="primary" *ngIf="showEditButton(promotion)" (click)="openEditPromotionDialog(promotion)">Edit</button>
+          </div>
+
+        </div>
+        <div class="promotion__info">
+          <p>Visits: {{promotion.visits}}</p>
+          <p>Status: <span [class]="promotionStatus2LabelMapping[promotion.status]">{{promotionStatus2LabelMapping[promotion.status]}}</span></p>
+          <p>Starts at: {{readableDate(promotion.dateStart)}}</p>
+          <p>Ends at: {{readableDate(promotion.dateEnd)}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

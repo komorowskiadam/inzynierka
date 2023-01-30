@@ -5,7 +5,7 @@ import {
   EditTicketPoolDto,
   CreateEventDto,
   CreateTicketPoolDto,
-  EditEventDto
+  EditEventDto, CreateEventPostDto
 } from "../../dto/Dtos";
 
 export enum EventActionTypes {
@@ -27,6 +27,8 @@ export enum EventActionTypes {
   CREATE_TICKET_POOL_ERROR = '[Events] Create ticket pool error',
   CHANGE_TICKET_POOL_STATUS = '[Events] Change ticket pool status',
   CHANGE_TICKET_POOL_QUANTITY = '[Events] Change ticket pool quantity',
+  CREATE_EVENT_POST = '[Events] Create event post',
+  ADD_EVENT_IMAGE = '[Events] Add event image'
 }
 
 export const getEvent = createAction(
@@ -118,3 +120,14 @@ export const changeTicketPoolQuantity = createAction(
   EventActionTypes.CHANGE_TICKET_POOL_QUANTITY,
   props<{ eventId: number, poolId: number, quantity: ChangeTicketPoolQuantityDto }>()
 );
+
+export const createEventPost = createAction(
+  EventActionTypes.CREATE_EVENT_POST,
+  props<{eventId: number, dto: CreateEventPostDto}>()
+);
+
+export const addEventImage = createAction(
+  EventActionTypes.ADD_EVENT_IMAGE,
+  props<{ eventDto: CreateEventDto, image: FormData }>()
+)
+

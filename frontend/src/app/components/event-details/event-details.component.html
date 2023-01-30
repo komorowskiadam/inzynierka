@@ -1,24 +1,60 @@
-<div *ngIf="(selectedEvent$ | async) as event">
-  <h1>Event name: {{event.name}}</h1>
-  <h2>Organizer: {{event.organizer.name}}</h2>
-  <h2>Description: </h2>
-  <div [innerHTML]="event.description">
+<div class="content">
+<div *ngIf="(selectedEvent$ | async) as event" class="container">
+  <div class="col col1">
+<!--    <div [ngStyle]="{'background-image': getUrl()}" class="background-image"></div>-->
+    <img [src]="imageUrl" class="background-image">
+    <div class="event-name-container">
+      <h1>Event name: {{event.name}}</h1>
+    </div>
+    <button style="margin-top: 10px;" mat-raised-button color="primary" (click)="openCreatePromotionDialog()">Promote</button>
+    <button style="margin-top: 20px; margin-bottom: 20px" mat-raised-button color="primary" (click)="openEditDialog()">Edit event details</button>
+    <h2 style="font-size: 24px; font-weight: lighter">Starts at: <b>{{event.dateStart}} {{event.timeStart}}</b></h2>
+    <h2 style="font-size: 24px; font-weight: lighter" *ngIf="event.dateEnd && event.timeEnd">Ends at: <b>{{event.dateEnd}} {{event.timeEnd}}</b></h2>
+    <h2 style="font-size: 22px; font-weight: lighter">Location: <b>{{event.location}}</b></h2>
+    <h2 style="font-size: 24px; font-weight: lighter">Description: </h2>
+    <div class="description" [innerHTML]="event.description | sanitizeHtml">
+    </div>
+    <h2 style="margin-top: 30px; font-size: 24px; font-weight: lighter">Total <b>{{event.interested.length}}</b> interested people:</h2>
+    <div *ngFor="let user of event.interested">
+      <p>{{user.name}} {{user.surname}}</p>
+    </div>
+    <h2 style="font-size: 24px; font-weight: lighter">Total <b>{{event.participants.length}}</b> people will take part:</h2>
+    <div *ngFor="let user of event.participants">
+      <p>{{user.name}} {{user.surname}}</p>
+    </div>
   </div>
-  <button (click)="openEditDialog()">Edit event details</button>
-  <h2>Total {{event.interested.length}} interested people:</h2>
-  <div *ngFor="let user of event.interested">
-    <p>{{user.name}} {{user.surname}}</p>
+  <div class="col col2">
+    <div class="ticket-header-container">
+      <h2>Tickets: </h2>
+      <button mat-raised-button color="primary" (click)="openCreateTicketPoolDialog()">Create new ticket pool</button>
+    </div>
+    <div *ngFor="let ticketPool of event.ticketPools" class="ticket-pool">
+      <div class="ticket-pool__header-container">
+        <p [classList]="TicketPoolStatus2LabelMapping[ticketPool.status]" >{{TicketPoolStatus2LabelMapping[ticketPool.status]}} </p>
+        <p>{{ticketPool.name}}</p>
+      </div>
+      <p>Price: <b>{{ticketPool.tickets[0].price}}zł</b></p>
+      <p>Seat numeration: <b>{{ticketPool.seatReservation ? "True" : "False"}}</b></p>
+      <p><b>{{getAvailableTickets(ticketPool.tickets)}}</b> available</p>
+      <p><b>{{getSoldTickets(ticketPool.tickets)}}</b> sold</p>
+      <button class="edit-pool-ticket" mat-raised-button color="primary" (click)="openEditTicketPoolDialog(ticketPool.id)">Edit ticket pool</button>
+      <button mat-raised-button color="primary" (click)="openChangePoolQuantityDialog(ticketPool.id)">Change quantity of tickets</button>
+    </div>
+    <div class="ticket-header-container">
+      <h2>Discussion: </h2>
+      <button mat-raised-button color="primary" (click)="openNewPostDialog()">New post</button>
+    </div>
+    <div *ngFor="let post of sortByDate(event.posts)" class="discussion-post">
+      <p style="font-size: 18px;">Author: <b>{{post.author.name}}</b></p>
+      <i>{{readableDate(post.date)}}</i>
+      <br>
+      <br>
+      <p>{{post.content}}</p>
+      <br>
+      <br>
+      <p>Likes: {{post.likes.length}}</p>
+    </div>
+    <p *ngIf="event.posts.length < 1">No posts in this discussion</p>
   </div>
-  <h2>Total {{event.participants.length}} people will take part:</h2>
-  <div *ngFor="let user of event.participants">
-    <p>{{user.name}} {{user.surname}}</p>
-  </div>
-  <h2>Tickets: </h2><button (click)="openCreateTicketPoolDialog()">Create new ticket pool</button>
-  <div *ngFor="let ticketPool of event.ticketPools">
-    <button (click)="openEditTicketPoolDialog(ticketPool.id)">Edit ticket pool</button>
-    <button (click)="openChangePoolQuantityDialog(ticketPool.id)">Change quantity of tickets</button>
-    <p><b>{{TicketPoolStatus2LabelMapping[ticketPool.status]}} </b>{{ticketPool.name}}: {{ticketPool.tickets.length}} tickets for {{ticketPool.tickets[0].price}}zł</p>
-    <p>{{getAvailableTickets(ticketPool.tickets)}} available</p>
-    <p>{{getSoldTickets(ticketPool.tickets)}} sold</p>
-  </div>
+</div>
 </div>

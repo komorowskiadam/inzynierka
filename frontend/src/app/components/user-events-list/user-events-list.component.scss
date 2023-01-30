@@ -1,0 +1,46 @@
+@import "../../variables";
+
+:host {
+  width: 100%;
+}
+
+h1 {
+  font-weight: lighter;
+  font-size: 40px;
+  text-align: center;
+}
+
+.event-miniature {
+  padding: 20px;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: start;
+  border: 1px solid $colorPink;
+  margin: 20px 0;
+
+
+  &__image {
+    width: 150px;
+    height: 75px;
+    background-size: cover;
+    margin-right: 40px;
+  }
+
+  h2 {
+    font-weight: normal;
+    font-size: 32px;
+    margin-right: 20px;
+  }
+
+  p {
+    margin-right: 20px;
+  }
+
+  &:hover {
+    -webkit-box-shadow: 8px 8px 24px -12px rgba(66, 68, 90, 1);
+    -moz-box-shadow: 8px 8px 24px -12px rgba(66, 68, 90, 1);
+    box-shadow: 8px 8px 24px -12px rgba(66, 68, 90, 1);
+  }
+}

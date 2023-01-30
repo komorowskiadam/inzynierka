@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
-import { EventService } from "../../services/event.service";
-import { MyEvent, Ticket, TicketPoolStatus2LabelMapping, TicketStatus } from "../../model/Models";
+import { backendAddress, EventService } from "../../services/event.service";
+import { EventPost, MyEvent, Ticket, TicketPoolStatus2LabelMapping, TicketStatus } from "../../model/Models";
 import { Store } from "@ngrx/store";
 import { getUserEvents, selectEvent } from "../../store/events/events.actions";
 import { Observable } from "rxjs";
@@ -14,6 +14,8 @@ import { EditTicketPoolComponent } from "../edit-ticket-pool/edit-ticket-pool.co
 import {
   ChangeTicketPoolQuantityComponent
 } from "../change-ticket-pool-quantity/change-ticket-pool-quantity.component";
+import { CreateNewPostComponent } from "../create-new-post/create-new-post.component";
+import { CreatePromotionComponent } from "../create-promotion/create-promotion.component";
 
 @Component({
   selector: 'app-event-details',
@@ -25,6 +27,8 @@ export class EventDetailsComponent implements OnInit {
   public TicketPoolStatus2LabelMapping = TicketPoolStatus2LabelMapping;
 
   selectedEvent$: Observable<MyEvent | undefined>;
+
+  imageUrl = "";
 
   constructor(private route: ActivatedRoute,
               private eventService: EventService,
@@ -38,6 +42,16 @@ export class EventDetailsComponent implements OnInit {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.store$.dispatch(getUserEvents({userId: this.tokenStorage.getId()}));
     this.store$.dispatch(selectEvent({id}));
+
+    this.selectedEvent$.subscribe(event => {
+      if(event && event.imageId) {
+        this.imageUrl = backendAddress + "/images/" + event.imageId;
+      }
+    });
+  }
+
+  getUrl(): string {
+    return "url('" + this.imageUrl + "')";
   }
 
   openEditDialog() {
@@ -47,6 +61,15 @@ export class EventDetailsComponent implements OnInit {
     this.dialog.open(EditEventComponent, {
       data: event,
       width: '500px'
+    });
+  }
+
+  openCreatePromotionDialog() {
+    let event;
+    this.selectedEvent$.subscribe(res => event = res);
+
+    this.dialog.open(CreatePromotionComponent, {
+      data: event
     });
   }
 
@@ -97,6 +120,27 @@ export class EventDetailsComponent implements OnInit {
       if(tickets[i].status == TicketStatus.SOLD) number++;
     }
     return number;
+  }
+
+  openNewPostDialog() {
+    let event;
+    this.selectedEvent$.subscribe(res => event = res);
+
+    this.dialog.open(CreateNewPostComponent, {
+      data: event
+    })
+  }
+
+  sortByDate(posts: EventPost[]): EventPost[] {
+    let arrayForSort = [...posts];
+    return arrayForSort.sort((a, b) => {
+      return Number(b.date) - Number(a.date);
+    });
+  }
+
+  readableDate(date: string) {
+    let num = Number(date);
+    return new Date(num).toUTCString();
   }
 
 }

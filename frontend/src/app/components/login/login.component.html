@@ -1,5 +1,6 @@
+<div class="content">
 <div class="login-content">
-  <h1>Login</h1>
+  <h1 class="login-header">Login</h1>
   <form [formGroup]="loginForm" (ngSubmit)="login()">
     <mat-form-field class="form-field" appearance="fill">
       <mat-label>Login</mat-label>
@@ -21,7 +22,8 @@
         This field is necessary.
       </mat-error>
     </mat-form-field>
-    <button mat-raised-button color="primary">Login</button>
+    <button mat-raised-button color="primary" style="margin-bottom: 50px;" class="form-field">Login</button>
+    <div class="register-hint">Not registered? <a routerLink="/register">Create account</a></div>
   </form>
 </div>
-
+</div>

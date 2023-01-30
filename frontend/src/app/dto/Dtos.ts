@@ -1,4 +1,4 @@
-import { TicketPoolStatus } from "../model/Models";
+import { PromotionStatus, TicketPoolStatus } from "../model/Models";
 
 export interface LoginData {
   username: string;
@@ -28,17 +28,29 @@ export interface CreateEventDto {
   organizerId: number;
   name: string;
   description: string;
+  timeStart: string;
+  dateStart: string;
+  location: string;
+  timeEnd?: string;
+  dateEnd?: string;
+  imageId?: number;
 }
 
 export interface EditEventDto {
   name: string;
   description: string;
+  timeStart: string;
+  dateStart: string;
+  location: string;
+  timeEnd?: string;
+  dateEnd?: string;
 }
 
 export interface CreateTicketPoolDto {
   quantity: number;
   price: number;
   poolName: string;
+  startSeatNumber?: number;
 }
 
 export interface EditTicketPoolDto {
@@ -48,4 +60,22 @@ export interface EditTicketPoolDto {
 
 export interface ChangeTicketPoolQuantityDto {
   quantity: number;
+}
+
+export interface CreateEventPostDto {
+  authorId: number;
+  date: string;
+  content: string;
+}
+
+export interface CreatePromotionDto {
+  eventId: number;
+  dateStart?: string | null;
+  dateEnd: string;
+}
+
+export interface EditPromotionDto {
+  status?: PromotionStatus | null;
+  dateStart?: string | null;
+  dateEnd?: string | null;
 }

@@ -34,5 +34,15 @@
     </mat-error>
   </mat-form-field>
 
-  <button mat-raised-button color="primary">Create</button>
+  <button (click)="seatNumeration=!seatNumeration" type="button">Add seat numeration</button>
+
+  <mat-form-field *ngIf="seatNumeration" class="form-field" appearance="fill">
+    <mat-label>Starting number</mat-label>
+    <input matInput type="number" formControlName="startSeatNumber" min="0" />
+    <mat-error *ngIf="createPoolForm.get('startSeatNumber')?.hasError('min')">
+      Starting seat number should be 0 or greater.
+    </mat-error>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit">Create</button>
 </form>

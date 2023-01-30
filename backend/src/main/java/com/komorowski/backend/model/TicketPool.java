@@ -27,4 +27,6 @@ public class TicketPool {
 
     private TicketPoolStatus status = TicketPoolStatus.ACTIVE;
 
+    private boolean seatReservation = false;
+
 }

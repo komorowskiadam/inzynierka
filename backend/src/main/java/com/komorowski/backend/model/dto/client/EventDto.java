@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -14,4 +16,11 @@ public class EventDto {
     private String name;
     private Integer interestedCount;
     private Integer participantsCount;
+    private List<Integer> likes;
+    private String dateStart;
+    private String dateEnd;
+    private String timeStart;
+    private String timeEnd;
+    private Long imageId;
+    private String location;
 }

@@ -12,4 +12,9 @@ import lombok.Setter;
 public class EditEventDto {
     private String name;
     private String description;
+    private String dateStart;
+    private String dateEnd;
+    private String timeStart;
+    private String timeEnd;
+    private String location;
 }

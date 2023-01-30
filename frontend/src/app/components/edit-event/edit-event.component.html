@@ -16,5 +16,31 @@
             formControlName="description">
     </editor>
   </div>
-  <button mat-raised-button color="primary" [disabled]="isFormInvalid()">Edit</button>
+  <mat-form-field class="form-field" appearance="fill">
+    <mat-label>Location</mat-label>
+    <input matInput type="text" formControlName="location" required />
+    <mat-error *ngIf="editForm.get('location')?.hasError('required')">
+      Location is required.
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class="form-field" appearance="fill">
+    <mat-label>Date of start</mat-label>
+    <input matInput type="date" formControlName="dateStart" [min]="today">
+  </mat-form-field>
+  <mat-form-field class="form-field" appearance="fill">
+    <mat-label>Hour of start</mat-label>
+    <input matInput type="time" formControlName="timeStart">
+  </mat-form-field>
+  <button type="button" *ngIf="!disabledEndInputs()" (click)="includeEndDate=!includeEndDate" style="margin-bottom: 30px">Add end date</button>
+  <div *ngIf="includeEndDate">
+    <mat-form-field class="form-field" appearance="fill">
+      <mat-label>Date of end</mat-label>
+      <input matInput type="date" formControlName="dateEnd" [min]="minEndDate()">
+    </mat-form-field>
+    <mat-form-field class="form-field" appearance="fill">
+      <mat-label>Hour of end</mat-label>
+      <input matInput type="time" formControlName="timeEnd">
+    </mat-form-field>
+  </div>
+  <button type="submit" mat-raised-button color="primary" [disabled]="isFormInvalid() || !isEndDateCorrect()">Edit</button>
 </form>

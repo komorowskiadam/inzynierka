@@ -16,4 +16,18 @@ class AuthService {
     final res = client.post(url, body: body, headers: requestHeaders);
     return res;
   }
+
+  Future<Response?> register(
+      String username, String password, String name, String surname) async {
+    var url = Uri.parse('${Constants.BASE_URL}/auth/signup');
+    var body = jsonEncode({
+      "username": username,
+      "password": password,
+      "role": ["user"],
+      "name": name,
+      "surname": surname
+    });
+    final res = client.post(url, body: body, headers: requestHeaders);
+    return res;
+  }
 }

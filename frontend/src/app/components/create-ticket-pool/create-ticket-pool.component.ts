@@ -13,10 +13,13 @@ import { createTicketPool } from "../../store/events/events.actions";
 })
 export class CreateTicketPoolComponent {
 
+  seatNumeration = false;
+
   createPoolForm = this.formBuilder.group({
     quantity: ['', [Validators.required, Validators.min(1)]],
     price: ['', [Validators.required, Validators.min(0)]],
-    name: ['', [Validators.required, Validators.minLength(5)]]
+    name: ['', [Validators.required, Validators.minLength(5)]],
+    startSeatNumber: ['0', Validators.min(0)]
   });
 
   constructor(private formBuilder: FormBuilder,
@@ -28,12 +31,15 @@ export class CreateTicketPoolComponent {
     let price = Number(this.createPoolForm.value.price);
     let quantity = Number(this.createPoolForm.value.quantity);
     let poolName = this.createPoolForm.value.name;
+    let startSeatNumber = Number(this.createPoolForm.value.startSeatNumber);
+
     if(!quantity || !price || !poolName) return;
 
     let createTicketPoolDto: CreateTicketPoolDto = {
       quantity,
       price,
-      poolName
+      poolName,
+      startSeatNumber: this.seatNumeration ? startSeatNumber : undefined
     }
 
     this.store$.dispatch(createTicketPool({eventId: this.event.id, createTicketPoolDto}));

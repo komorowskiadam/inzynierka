@@ -1,5 +1,6 @@
+<div class="content">
 <div class="register-content">
-  <h1>Register</h1>
+  <h1 class="register-header">Register</h1>
   <form [formGroup]="registerForm" (ngSubmit)="register()">
     <mat-form-field class="form-field" appearance="fill">
       <mat-label>Login</mat-label>
@@ -42,9 +43,8 @@
       </mat-error>
     </mat-form-field>
 
-    <button mat-raised-button color="primary">Login</button>
+    <button mat-raised-button color="primary" class="form-field">Login</button>
+    <div class="register-hint">Already have an account? <a routerLink="/login">Login</a></div>
   </form>
 </div>
-
-<h2 *ngIf="errorMessage">{{ errorMessage }}</h2>
-<h2 *ngIf="successMessage">{{ successMessage }} <a routerLink="/login">Log in!</a></h2>
+</div>

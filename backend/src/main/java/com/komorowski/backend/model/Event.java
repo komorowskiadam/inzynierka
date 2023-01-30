@@ -22,7 +22,10 @@ public class Event {
     @OneToOne
     private MyUser organizer;
 
+    @Lob
     private String description;
+
+    private String location;
 
     @OneToMany
     private List<MyUser> participants = Collections.emptyList();
@@ -31,6 +34,19 @@ public class Event {
     private List<MyUser> interested = Collections.emptyList();
 
     @OneToMany
-    private List<TicketPool> ticketPools;
+    private List<MyUser> likes = Collections.emptyList();
+
+    @OneToMany
+    private List<TicketPool> ticketPools = Collections.emptyList();;
+
+    @OneToMany
+    private List<EventPost> posts = Collections.emptyList();
+
+    private String dateStart;
+    private String dateEnd;
+    private String timeStart;
+    private String timeEnd;
+
+    private Long imageId;
 
 }

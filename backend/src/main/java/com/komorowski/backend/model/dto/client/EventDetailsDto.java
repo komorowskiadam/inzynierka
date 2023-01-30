@@ -1,5 +1,6 @@
 package com.komorowski.backend.model.dto.client;
 
+import com.komorowski.backend.model.dto.EventPostDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,4 +17,13 @@ public class EventDetailsDto {
     private String name;
     private String description;
     private List<TicketPoolDto> ticketPools;
+    private List<Integer> interested;
+    private List<Integer> participants;
+    private List<EventPostDto> posts;
+    private String dateStart;
+    private String dateEnd;
+    private String timeStart;
+    private String timeEnd;
+    private Long imageId;
+    private String location;
 }

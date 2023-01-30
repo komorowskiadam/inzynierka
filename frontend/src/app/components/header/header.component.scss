@@ -1,0 +1,29 @@
+@import "../../variables";
+
+.container {
+  width: 100%;
+  padding: 20px;
+  border-bottom: 1px solid black;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  box-sizing: border-box;
+
+  h1 {
+    cursor: pointer;
+    font-weight: lighter;
+    font-size: 36px;
+  }
+
+  p {
+    cursor: pointer;
+    color: $colorViolet;
+    padding: 15px 25px;
+    font-size: 24px;
+
+    &:hover {
+      background-color: $colorViolet;
+      color: white;
+    }
+  }
+}

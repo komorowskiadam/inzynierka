@@ -5,13 +5,13 @@ import {
   EditTicketPoolDto,
   CreateEventDto,
   CreateTicketPoolDto,
-  EditEventDto
+  EditEventDto, CreateEventPostDto, CreatePromotionDto, EditPromotionDto
 } from "../dto/Dtos";
 import { Observable } from "rxjs";
-import { MyEvent } from "../model/Models";
+import { MyEvent, Promotion } from "../model/Models";
 
 
-const backendAddress = 'http://localhost:8080';
+export const backendAddress = 'http://localhost:8080';
 
 @Injectable({
   providedIn: 'root'
@@ -48,4 +48,23 @@ export class EventService {
     return this.http.patch<MyEvent>(backendAddress + "/events/" + eventId + "/changeTicketsQuantity/" + poolId, quantity);
   }
 
+  createEventPost(eventId: number, dto: CreateEventPostDto): Observable<MyEvent> {
+    return this.http.post<MyEvent>(backendAddress + "/events/" + eventId + "/addPost", dto);
+  }
+
+  uploadImage(imageData: any): Observable<number> {
+    return this.http.post<number>(backendAddress + "/images", imageData);
+  }
+
+  createPromotion(dto: CreatePromotionDto): Observable<Promotion> {
+    return this.http.post<Promotion>(backendAddress + "/promotions", dto);
+  }
+
+  getUserPromotions(id: number): Observable<Promotion[]> {
+    return this.http.get<Promotion[]>(backendAddress + "/promotions/" + id);
+  }
+
+  editPromotion(id: number, dto: EditPromotionDto): Observable<Promotion> {
+    return this.http.patch<Promotion>(backendAddress + "/promotions/" + id, dto);
+  }
 }

@@ -1,0 +1,116 @@
+@import "../../variables";
+
+.content {
+  width: 100%;
+  height: calc(100% - 103px);
+  background: linear-gradient($colorPink, $colorViolet);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  overflow-y: scroll;
+  padding: 20px;
+  width: 50%;
+  background-color: white;
+  border-radius: 20px;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1 {
+  font-size: 32px;
+  font-weight: lighter;
+}
+
+.promotion {
+  border-radius: 5px;
+  width: 90%;
+  border: 1px solid black;
+  display: flex;
+  flex-direction: row;
+  margin: 15px 0;
+
+  &__background-image {
+    width: 300px;
+    height: 180px;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 10px;
+  }
+
+  &__wrapper {
+    padding: 10px;
+  }
+
+  &__button-wrapper {
+    display: flex;
+    flex-direction: row;
+  }
+
+  &__header-container {
+    display: flex;
+    flex-direction: row;
+
+    button {
+      font-size: 16px;
+      margin-left: 10px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      .mat-icon {
+        font-size: 16px;
+      }
+    }
+  }
+}
+
+.event-name {
+  font-size: 24px;
+  font-weight: normal;
+  margin-right: 30px;
+}
+
+.Pending {
+  border-radius: 5px;
+  width: 55px;
+  display: inline-block;
+  background-color: #dfdf00;
+  color: white;
+  padding: 5px;
+  font-weight: bolder;
+}
+
+.Active {
+  border-radius: 5px;
+  width: 40px;
+  display: inline-block;
+  background-color: green;
+  color: white;
+  padding: 5px;
+  font-weight: bolder;
+}
+
+.Paused {
+  border-radius: 5px;
+  width: 50px;
+  display: inline-block;
+  background-color: #dfdf00;
+  color: white;
+  padding: 5px;
+  font-weight: bolder;
+}
+
+.Inactive {
+  border-radius: 5px;
+  width: 50px;
+  display: inline-block;
+  background-color: darkorange;
+  color: white;
+  padding: 5px;
+  font-weight: bolder;
+}
