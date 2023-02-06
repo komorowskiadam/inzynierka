@@ -40,6 +40,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { HeaderComponent } from './components/header/header.component';
 import { UserDetailsComponent } from './components/user-details/user-details.component';
+import { AddTicketImageComponent } from './components/add-ticket-image/add-ticket-image.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import { UserDetailsComponent } from './components/user-details/user-details.com
     PromotionsComponent,
     EditPromotionComponent,
     HeaderComponent,
-    UserDetailsComponent
+    UserDetailsComponent,
+    AddTicketImageComponent
   ],
   imports: [
     BrowserModule,

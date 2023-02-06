@@ -20,4 +20,5 @@ public class TicketPoolDto {
     private Long eventId;
     private boolean seatReservation;
     private List<Integer> availableSeats = Collections.emptyList();
+    private Long imageId;
 }

@@ -56,6 +56,7 @@ export interface CreateTicketPoolDto {
 export interface EditTicketPoolDto {
   status: TicketPoolStatus;
   name: string;
+  imageId?: number;
 }
 
 export interface ChangeTicketPoolQuantityDto {

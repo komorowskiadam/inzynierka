@@ -1,7 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { backendAddress, EventService } from "../../services/event.service";
-import { EventPost, MyEvent, Ticket, TicketPoolStatus2LabelMapping, TicketStatus } from "../../model/Models";
+import {
+  EventPost,
+  MyEvent,
+  Ticket,
+  TicketPool,
+  TicketPoolStatus2LabelMapping,
+  TicketStatus
+} from "../../model/Models";
 import { Store } from "@ngrx/store";
 import { getUserEvents, selectEvent } from "../../store/events/events.actions";
 import { Observable } from "rxjs";
@@ -16,6 +23,7 @@ import {
 } from "../change-ticket-pool-quantity/change-ticket-pool-quantity.component";
 import { CreateNewPostComponent } from "../create-new-post/create-new-post.component";
 import { CreatePromotionComponent } from "../create-promotion/create-promotion.component";
+import { AddTicketImageComponent } from "../add-ticket-image/add-ticket-image.component";
 
 @Component({
   selector: 'app-event-details',
@@ -50,9 +58,13 @@ export class EventDetailsComponent implements OnInit {
     });
   }
 
-  getUrl(): string {
-    return "url('" + this.imageUrl + "')";
+  getTicketPoolSrc(pool: TicketPool) {
+    if(pool.imageId){
+      return backendAddress + "/images/" + pool.imageId;
+    }
+    return "";
   }
+
 
   openEditDialog() {
     let event;
@@ -63,6 +75,8 @@ export class EventDetailsComponent implements OnInit {
       width: '500px'
     });
   }
+
+
 
   openCreatePromotionDialog() {
     let event;
@@ -87,6 +101,18 @@ export class EventDetailsComponent implements OnInit {
     this.selectedEvent$.subscribe(res => event = res);
 
     this.dialog.open(EditTicketPoolComponent, {
+      data: {
+        event: event,
+        poolId: poolId
+      }
+    });
+  }
+
+  openAddTicketImage(poolId: number){
+    let event;
+    this.selectedEvent$.subscribe(res => event = res);
+
+    this.dialog.open(AddTicketImageComponent, {
       data: {
         event: event,
         poolId: poolId

@@ -6,7 +6,12 @@ import { EventService } from "../../services/event.service";
 import {
   addEvent,
   addEventError,
-  addEventSuccess, createTicketPoolError, createTicketPoolSuccess, editEventError, editEventSuccess,
+  addEventSuccess,
+  changeTicketPoolStatus,
+  createTicketPoolError,
+  createTicketPoolSuccess,
+  editEventError,
+  editEventSuccess,
   EventActionTypes,
   getEventError,
   getEventSuccess,
@@ -14,8 +19,9 @@ import {
   getUserEventsSuccess
 } from "./events.actions";
 import { catchError, map, of, switchMap } from "rxjs";
-import { CreateEventDto } from "../../dto/Dtos";
+import { CreateEventDto, EditTicketPoolDto } from "../../dto/Dtos";
 import { Router } from "@angular/router";
+import { Form } from "@angular/forms";
 
 @Injectable({providedIn: 'root'})
 export class EventsEffects {
@@ -136,6 +142,18 @@ export class EventsEffects {
       catchError(err => {
         this.toastr.error("Could not upload image. Error: " + err.message);
         return of(addEventError({message: err.message}))
+      })
+    ))
+  ));
+
+  addTicketImage$ = createEffect(() => this.actions$.pipe(
+    ofType(EventActionTypes.ADD_TICKET_IMAGE),
+    switchMap(({eventId, poolId, status, image}: {eventId: number, poolId: number, status: EditTicketPoolDto, image: FormData}) => this.eventService.uploadImage(image).pipe(
+      map((imageId) => {
+        return changeTicketPoolStatus({
+          eventId,
+          poolId,
+          status: {...status, imageId}});
       })
     ))
   ));

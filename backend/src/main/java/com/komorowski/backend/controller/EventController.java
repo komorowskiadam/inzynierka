@@ -159,6 +159,9 @@ public class EventController {
         if (editTicketPoolDto.getName() != null) {
             ticketPool.setName(editTicketPoolDto.getName());
         }
+        if(editTicketPoolDto.getImageId() != null) {
+            ticketPool.setImageId(editTicketPoolDto.getImageId());
+        }
 
         ticketPoolRepository.save(ticketPool);
 

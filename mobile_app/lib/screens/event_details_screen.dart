@@ -53,6 +53,22 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
     });
   }
 
+  final eventNameStyle = const TextStyle(
+      color: Colors.black,
+      fontSize: 28.0,
+      fontFamily: 'Roboto',
+      fontWeight: FontWeight.w700);
+  final locationStyle = const TextStyle(
+      color: Colors.black,
+      fontSize: 20,
+      fontFamily: 'Roboto',
+      fontWeight: FontWeight.w400);
+  final locationStyleBold = const TextStyle(
+      color: Colors.black,
+      fontSize: 20,
+      fontFamily: 'Roboto',
+      fontWeight: FontWeight.w700);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,7 +96,6 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
               if (snapshot.data!.ticketPools.isNotEmpty) {
                 return Column(
                   children: [
-                    const Text("Ticket pools: "),
                     TicketPoolsListWidget(
                       ticketPools: snapshot.data!.ticketPools,
                       eventId: eventId,
@@ -96,31 +111,96 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
               child: Column(
                 children: [
                   eventImage(),
-                  Text("Event name: ${snapshot.data!.name}"),
-                  ScrollableDescription(data: snapshot.data!.description),
-                  Text("Location: ${snapshot.data!.location}"),
-                  Text("Interested: ${snapshot.data!.interested.length}"),
-                  ElevatedButton(
-                      style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                              snapshot.data!.interested.contains(userId)
-                                  ? Constants.colorPink
-                                  : const Color.fromRGBO(220, 220, 220, 1))),
-                      onPressed: () => {interested()},
-                      child: const Text("Interested")),
-                  Text("Will take part: ${snapshot.data!.participants.length}"),
-                  ElevatedButton(
-                      style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                              snapshot.data!.participants.contains(userId)
-                                  ? Constants.colorViolet
-                                  : const Color.fromRGBO(220, 220, 220, 1))),
-                      onPressed: () => {takePart()},
-                      child: const Text("Take part")),
-                  ticketPools(),
-                  EventPostList(
-                    posts: snapshot.data!.posts,
-                  )
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Column(
+                      children: [
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child:
+                              Text(snapshot.data!.name, style: eventNameStyle),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.all(10),
+                        ),
+                        ScrollableDescription(data: snapshot.data!.description),
+                        const Padding(
+                          padding: EdgeInsets.all(15),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Event will take place in ",
+                              style: locationStyle,
+                            ),
+                            Text(snapshot.data!.location,
+                                style: locationStyleBold)
+                          ],
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.all(15),
+                        ),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Spacer(),
+                              Column(
+                                children: [
+                                  Text(
+                                      "Interested: ${snapshot.data!.interested.length}"),
+                                  ElevatedButton(
+                                      style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.all<Color>(
+                                                  snapshot.data!.interested
+                                                          .contains(userId)
+                                                      ? Constants.colorPink
+                                                      : const Color.fromRGBO(
+                                                          220, 220, 220, 1))),
+                                      onPressed: () => {interested()},
+                                      child: const Text("Interested")),
+                                ],
+                              ),
+                              Spacer(),
+                              Column(
+                                children: [
+                                  Text(
+                                      "Will take part: ${snapshot.data!.participants.length}"),
+                                  ElevatedButton(
+                                      style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.all<Color>(
+                                                  snapshot.data!.participants
+                                                          .contains(userId)
+                                                      ? Constants.colorViolet
+                                                      : const Color.fromRGBO(
+                                                          220, 220, 220, 1))),
+                                      onPressed: () => {takePart()},
+                                      child: const Text("Take part")),
+                                ],
+                              ),
+                              Spacer(),
+                            ],
+                          ),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.all(15),
+                        ),
+                        ticketPools(),
+                        const Padding(
+                          padding: EdgeInsets.all(12),
+                        ),
+                        EventPostList(
+                          posts: snapshot.data!.posts,
+                        )
+                      ],
+                    ),
+                  ),
                 ],
               ),
             );
@@ -141,8 +221,19 @@ class TicketPoolsListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final title = TextStyle(fontSize: 20, fontWeight: FontWeight.w700);
+
     List<Widget> list = <Widget>[];
+
+    list.add(Text(
+      "Ticket pools available: ",
+      style: title,
+    ));
+
     for (var i = 0; i < ticketPools.length; i++) {
+      list.add(const Padding(
+        padding: EdgeInsets.all(10),
+      ));
       list.add(TicketPoolWidget(
         ticketPool: ticketPools[i],
         eventId: eventId,
@@ -162,25 +253,68 @@ class TicketPoolWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const nameStyle = TextStyle(fontSize: 22, fontWeight: FontWeight.w600);
+
+    const ticketsStyle = TextStyle(fontSize: 18, fontWeight: FontWeight.w400);
+
+    Widget button() {
+      if (ticketPool.status == "ACTIVE") {
+        return ElevatedButton(
+          onPressed: () {
+            Navigator.push(
+                context,
+                SlideRightRoute(
+                    page: BuyTicketWidgetScreen(
+                  ticketPool: ticketPool,
+                  eventId: eventId,
+                )));
+          },
+          child: const Text("Buy ticket"),
+        );
+      } else {
+        return Container(
+            decoration: BoxDecoration(
+                color: Colors.orange, borderRadius: BorderRadius.circular(15)),
+            child: const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+              child: Text(
+                "Sale is not active",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.white,
+                ),
+              ),
+            ));
+      }
+    }
+
     return Container(
+      padding: const EdgeInsets.all(15),
+      decoration: BoxDecoration(
+          border: Border.all(color: Colors.black),
+          borderRadius: const BorderRadius.all(Radius.circular(20))),
       child: Column(
         children: [
-          Text(ticketPool.name),
-          Text("Available tickets: ${ticketPool.availableTickets}"),
-          Text("Sold tickets: ${ticketPool.soldTickets}"),
-          Text("Status: ${ticketPool.status}"),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  SlideRightRoute(
-                      page: BuyTicketWidgetScreen(
-                    ticketPool: ticketPool,
-                    eventId: eventId,
-                  )));
-            },
-            child: const Text("Buy ticket"),
+          Text(
+            ticketPool.name,
+            style: nameStyle,
           ),
+          const Padding(
+            padding: EdgeInsets.all(7),
+          ),
+          Text(
+            "Available tickets: ${ticketPool.availableTickets}",
+            style: ticketsStyle,
+          ),
+          const Padding(
+            padding: EdgeInsets.all(7),
+          ),
+          Text("Sold tickets: ${ticketPool.soldTickets}", style: ticketsStyle),
+          const Padding(
+            padding: EdgeInsets.all(8),
+          ),
+          button()
         ],
       ),
     );
@@ -195,9 +329,22 @@ class EventPostList extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> list = <Widget>[];
     List<EventPost> sorted = posts;
+    const discussionTitle =
+        TextStyle(fontSize: 22, fontWeight: FontWeight.w600);
 
     sorted.sort(
         (a, b) => int.parse(b.stringDate).compareTo(int.parse(a.stringDate)));
+
+    list.add(const Text(
+      "Discussion: ",
+      style: discussionTitle,
+    ));
+
+    list.add(
+      const Padding(
+        padding: EdgeInsets.all(8),
+      ),
+    );
 
     for (var i = 0; i < sorted.length; i++) {
       list.add(EventPostWidget(eventPost: sorted[i]));
@@ -223,15 +370,51 @@ class _EventPostWidgetState extends State<EventPostWidget> {
 
   _EventPostWidgetState(this.eventPost);
 
+  final authorStyle =
+      const TextStyle(fontSize: 20, fontWeight: FontWeight.w400);
+  final dateStyle = const TextStyle(
+      fontSize: 16, fontWeight: FontWeight.w400, fontStyle: FontStyle.italic);
+  final contentStyle =
+      const TextStyle(fontSize: 20, fontWeight: FontWeight.w400);
+
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: const EdgeInsets.all(15),
+      decoration: BoxDecoration(
+          border: Border.all(color: Colors.black),
+          borderRadius: BorderRadius.circular(15)),
       child: Column(
         children: [
-          Text("Author: ${eventPost.author}"),
-          Text("Date: ${eventPost.date}"),
-          Text("Content: ${eventPost.content}"),
-          Text("Likes: ${eventPost.likes.length}")
+          Text(
+            "Author: ${eventPost.author}",
+            style: authorStyle,
+          ),
+          const Padding(
+            padding: EdgeInsets.all(4),
+          ),
+          Text(
+            "${eventPost.date}",
+            style: dateStyle,
+          ),
+          const Padding(
+            padding: EdgeInsets.all(8),
+          ),
+          Text(eventPost.content, style: contentStyle),
+          const Padding(
+            padding: EdgeInsets.all(6),
+          ),
+          Row(
+            children: [
+              const Spacer(flex: 3),
+              Text("Likes: ${eventPost.likes.length}"),
+              const Spacer(
+                flex: 1,
+              ),
+              const Icon(Icons.favorite_border_outlined),
+              const Spacer(flex: 3),
+            ],
+          ),
         ],
       ),
     );
@@ -244,9 +427,14 @@ class ScrollableDescription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final titleStyle = TextStyle(fontSize: 20, fontWeight: FontWeight.w500);
+
     return Column(
       children: [
-        const Text("Descritpion:"),
+        Text(
+          "Descritpion:",
+          style: titleStyle,
+        ),
         SizedBox(
             height: 150,
             child: SingleChildScrollView(
@@ -256,8 +444,9 @@ class ScrollableDescription extends StatelessWidget {
                     data: "<div class='description'>$data</div>",
                     style: {
                       ".description": Style(
+                          backgroundColor: Color.fromRGBO(240, 240, 240, 1),
                           padding: const EdgeInsets.symmetric(
-                              vertical: 0, horizontal: 20))
+                              vertical: 10, horizontal: 20))
                     },
                   ),
                 ],

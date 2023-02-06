@@ -34,9 +34,11 @@
         <p>{{ticketPool.name}}</p>
       </div>
       <p>Price: <b>{{ticketPool.tickets[0].price}}zł</b></p>
-      <p>Seat numeration: <b>{{ticketPool.seatReservation ? "True" : "False"}}</b></p>
+      <p>Seat numeration: <b>{{ticketPool.seatReservation ? "True" : "False"}}</b><button style="margin-left: 15px;" mat-raised-button color="primary" *ngIf="ticketPool.seatReservation" (click)="openAddTicketImage(ticketPool.id)">Add seats image</button></p>
+      <img *ngIf="ticketPool.seatReservation" [src]="getTicketPoolSrc(ticketPool)" style="width: 50px;">
       <p><b>{{getAvailableTickets(ticketPool.tickets)}}</b> available</p>
       <p><b>{{getSoldTickets(ticketPool.tickets)}}</b> sold</p>
+      <p>DUPA: {{ticketPool.imageId}}</p>
       <button class="edit-pool-ticket" mat-raised-button color="primary" (click)="openEditTicketPoolDialog(ticketPool.id)">Edit ticket pool</button>
       <button mat-raised-button color="primary" (click)="openChangePoolQuantityDialog(ticketPool.id)">Change quantity of tickets</button>
     </div>

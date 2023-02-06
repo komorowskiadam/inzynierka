@@ -40,6 +40,7 @@ export interface TicketPool {
   name: string;
   status: TicketPoolStatus;
   seatReservation: boolean;
+  imageId?: number;
 }
 
 export enum TicketStatus {

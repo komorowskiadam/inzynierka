@@ -1,0 +1,8 @@
+<h1>Add ticket image</h1>
+<form>
+  <div class="mat-form-field-wrapper">
+    <label>Select image</label>
+    <input type="file" accept="image/png, image/jpeg" (change)="onFileChange($event)">
+  </div>
+  <button mat-raised-button color="primary" (click)="add()">Edit</button>
+</form>

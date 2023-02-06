@@ -29,4 +29,6 @@ public class TicketPool {
 
     private boolean seatReservation = false;
 
+    private Long imageId;
+
 }

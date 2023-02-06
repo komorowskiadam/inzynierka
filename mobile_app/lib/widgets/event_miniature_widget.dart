@@ -63,8 +63,8 @@ class EventMiniatureWidget extends StatefulWidget {
     ));
 
     if (end != null) {
-      var diffInHours = end!.difference(start).inHours;
-
+      var diffInHours = end.difference(start).inHours;
+      list.add(const Padding(padding: EdgeInsets.all(5)));
       list.add(Row(children: [
         const Icon(
           Icons.timer_sharp,
@@ -159,8 +159,10 @@ class _EventMiniatureWidgetState extends State<EventMiniatureWidget> {
                     alignment: Alignment.centerLeft,
                     child: Text(event.name, style: eventNameStyle),
                   ),
+                  const Padding(padding: EdgeInsets.all(8)),
                   EventMiniatureWidget.getDates(
                       event.dateTimeStart, event.dateTimeEnd, interestedStyle),
+                  const Padding(padding: EdgeInsets.all(5)),
                   Row(
                     children: [
                       const Icon(
@@ -173,6 +175,7 @@ class _EventMiniatureWidgetState extends State<EventMiniatureWidget> {
                       ),
                     ],
                   ),
+                  const Padding(padding: EdgeInsets.all(5)),
                   Row(
                     children: [
                       const Icon(
@@ -183,6 +186,7 @@ class _EventMiniatureWidgetState extends State<EventMiniatureWidget> {
                           style: interestedStyle),
                     ],
                   ),
+                  const Padding(padding: EdgeInsets.all(5)),
                   Row(
                     children: [
                       const Icon(
@@ -191,6 +195,16 @@ class _EventMiniatureWidgetState extends State<EventMiniatureWidget> {
                       ),
                       Text(
                         event.location,
+                        style: interestedStyle,
+                      )
+                    ],
+                  ),
+                  const Padding(padding: EdgeInsets.all(5)),
+                  Row(
+                    children: [
+                      const Icon(Icons.bookmark_rounded, color: Colors.black),
+                      Text(
+                        "Tickets available",
                         style: interestedStyle,
                       )
                     ],

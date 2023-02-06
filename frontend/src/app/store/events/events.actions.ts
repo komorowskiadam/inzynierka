@@ -28,7 +28,8 @@ export enum EventActionTypes {
   CHANGE_TICKET_POOL_STATUS = '[Events] Change ticket pool status',
   CHANGE_TICKET_POOL_QUANTITY = '[Events] Change ticket pool quantity',
   CREATE_EVENT_POST = '[Events] Create event post',
-  ADD_EVENT_IMAGE = '[Events] Add event image'
+  ADD_EVENT_IMAGE = '[Events] Add event image',
+  ADD_TICKET_IMAGE = '[Events] Add ticket image',
 }
 
 export const getEvent = createAction(
@@ -129,5 +130,10 @@ export const createEventPost = createAction(
 export const addEventImage = createAction(
   EventActionTypes.ADD_EVENT_IMAGE,
   props<{ eventDto: CreateEventDto, image: FormData }>()
-)
+);
+
+export const addTicketImage = createAction(
+  EventActionTypes.ADD_TICKET_IMAGE,
+  props<{ eventId: number, poolId: number, status: EditTicketPoolDto, image: FormData }>()
+);
 
