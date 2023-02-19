@@ -26,8 +26,6 @@ class _TransferTicketWidgetState extends State<TransferTicketWidget> {
     userList = eventService.getAllUsers();
   }
 
-  _TransferTicketWidgetState(this.ticket);
-
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -56,6 +54,8 @@ class _TransferTicketWidgetState extends State<TransferTicketWidget> {
       }),
     );
   }
+
+  _TransferTicketWidgetState(this.ticket);
 }
 
 class SelectUserWidget extends StatefulWidget {

@@ -13,6 +13,7 @@ export interface MyEvent {
   timeEnd?: string;
   dateEnd?: string;
   imageId?: number;
+  category: EventCategory;
 }
 
 export interface MyUser {
@@ -75,6 +76,8 @@ export interface Promotion {
   dateEnd: string;
   status: PromotionStatus;
   visits: number;
+  payed: boolean;
+  value?: number;
 }
 
 export enum PromotionStatus {
@@ -89,4 +92,24 @@ export const PromotionStatus2LabelMapping: Record<PromotionStatus, string> = {
   [PromotionStatus.ACTIVE]: "Active",
   [PromotionStatus.PAUSED]: "Paused",
   [PromotionStatus.INACTIVE]: "Inactive"
+}
+
+export enum EventCategory {
+  PARTY = "PARTY",
+  CONCERT = "CONCERT",
+  SPORT = "SPORT",
+  FOR_KIDS = "FOR_KIDS",
+  CABARET = "CABARET",
+  CINEMA = "CINEMA",
+  OTHER = "OTHER"
+}
+
+export const EventCategory2LabelMapping: Record<EventCategory, string> = {
+  [EventCategory.PARTY]: "Party",
+  [EventCategory.CONCERT]: "Concert",
+  [EventCategory.SPORT]: "Sport",
+  [EventCategory.FOR_KIDS]: "For kids",
+  [EventCategory.CABARET]: "Cabaret",
+  [EventCategory.CINEMA]: "Cinema",
+  [EventCategory.OTHER]: "Other",
 }

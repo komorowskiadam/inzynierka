@@ -18,6 +18,7 @@ class MyEventDetails {
   final String? timeEnd;
   final int? imageId;
   final String location;
+  final String category;
 
   const MyEventDetails(
       {required this.id,
@@ -32,13 +33,16 @@ class MyEventDetails {
       required this.dateEnd,
       required this.timeEnd,
       required this.imageId,
-      required this.location});
+      required this.location,
+      required this.category});
 
   factory MyEventDetails.fromJson(Map<String, dynamic> data) {
     final codeUnits = data['description'].toString().codeUnits;
     String description = const Utf8Decoder().convert(codeUnits);
+
     final codeUnits2 = data['name'].toString().codeUnits;
     String name = const Utf8Decoder().convert(codeUnits2);
+
     final codeUnits3 = data['location'].toString().codeUnits;
     String location = const Utf8Decoder().convert(codeUnits3);
     return MyEventDetails(
@@ -56,6 +60,7 @@ class MyEventDetails {
         dateEnd: data['dateEnd'],
         timeEnd: data['timeEnd'],
         imageId: data['imageId'],
-        location: location);
+        location: location,
+        category: data['category']);
   }
 }

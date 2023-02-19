@@ -8,7 +8,7 @@ import { selectPromotions } from "../../store/promotions/promotions.selectors";
 import { MatDialog } from "@angular/material/dialog";
 import { EditPromotionComponent } from "../edit-promotion/edit-promotion.component";
 import { EditPromotionDto } from "../../dto/Dtos";
-import { backendAddress } from "../../services/event.service";
+import { backendAddress, EventService } from "../../services/event.service";
 
 @Component({
   selector: 'app-promotions',
@@ -23,7 +23,8 @@ export class PromotionsComponent implements OnInit {
 
   constructor(private store$: Store,
               private tokenStorage: TokenStorageService,
-              private dialog: MatDialog,) {
+              private dialog: MatDialog,
+              private eventService: EventService) {
     this.promotions$ = this.store$.select(selectPromotions);
   }
 
@@ -84,6 +85,21 @@ export class PromotionsComponent implements OnInit {
   getUrl(event: MyEvent): string {
     if(!event.imageId) return "";
     return backendAddress + "/images/" + event.imageId;
+  }
+
+  pay(amount: number, promId: number) {
+    this.eventService.payByPaypal(amount).subscribe(link => {
+      window.open(link, "_blank");
+    },
+    async error => {
+      let link = error.error.text;
+      link = link.slice(9);
+      window.open(link, "_blank");
+
+      await new Promise(f => setTimeout(f, 5000));
+
+      this.store$.dispatch(editPromotion({id: promId, dto: {payed: true}}));
+    });
   }
 
 }

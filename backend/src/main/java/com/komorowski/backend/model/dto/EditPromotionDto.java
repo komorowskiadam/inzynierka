@@ -13,4 +13,5 @@ public class EditPromotionDto {
     private String dateStart;
     private String dateEnd;
     private String status;
+    private boolean payed;
 }

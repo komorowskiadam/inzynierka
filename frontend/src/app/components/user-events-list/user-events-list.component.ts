@@ -16,20 +16,21 @@ export class UserEventsListComponent implements OnInit {
 
   events$: Observable<MyEvent[] | undefined>
 
-  constructor(private eventService: EventService,
-              private tokenStorage: TokenStorageService,
+  constructor(private tokenStorage: TokenStorageService,
               private store$: Store) {
-    this.events$ = this.store$.select(selectEvents);
-  }
 
-  ngOnInit(): void {
-    const id = this.tokenStorage.getId();
-    this.store$.dispatch(getUserEvents({userId: id}));
+    this.events$ = this.store$.select(selectEvents);
+
   }
 
   getUrl(event: MyEvent): string {
     if(!event.imageId) return "";
     return "url('" + backendAddress + "/images/" + event.imageId + "')";
+  }
+
+  ngOnInit(): void {
+    const id = this.tokenStorage.getId();
+    this.store$.dispatch(getUserEvents({userId: id}));
   }
 
 }

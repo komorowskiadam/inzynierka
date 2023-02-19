@@ -39,7 +39,6 @@ export class EventDetailsComponent implements OnInit {
   imageUrl = "";
 
   constructor(private route: ActivatedRoute,
-              private eventService: EventService,
               private store$: Store,
               private dialog: MatDialog,
               private tokenStorage: TokenStorageService) {
@@ -72,7 +71,8 @@ export class EventDetailsComponent implements OnInit {
 
     this.dialog.open(EditEventComponent, {
       data: event,
-      width: '500px'
+      width: '500px',
+      height: '800px'
     });
   }
 

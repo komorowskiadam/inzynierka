@@ -67,8 +67,20 @@
     background-size: cover;
     border-bottom: 1px solid black;
   }
+
+  &__row {
+    font-size: 24px;
+
+    mat-icon {
+      margin-right: 2px;
+    }
+  }
 }
 
 .event-info {
   padding: 10px;
+
+  h1 {
+    font-weight: normal;
+  }
 }

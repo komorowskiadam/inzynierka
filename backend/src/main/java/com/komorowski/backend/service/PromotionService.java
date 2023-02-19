@@ -120,6 +120,9 @@ public class PromotionService {
         if(dto.getStatus() != null) {
             changePromotionStatus(promotion.getId(), dto.getStatus());
         }
+        if(dto.isPayed()) {
+            promotion.setPayed(true);
+        }
 
         promotionRepository.save(promotion);
 

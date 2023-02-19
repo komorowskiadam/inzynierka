@@ -1,10 +1,14 @@
 <h1>Your events: </h1>
 
-<div *ngFor="let event of (events$ | async)" class="event-miniature" routerLink="/event/{{event.id}}">
-  <div [ngStyle]="{'background-image': getUrl(event)}" class="event-miniature__image"></div>
+<div *ngFor="let event of (events$ | async)"
+     class="event-miniature"
+     routerLink="/event/{{event.id}}">
+  <div [ngStyle]="{'background-image': getUrl(event)}"
+       class="event-miniature__image"></div>
   <h2>{{event.name}}</h2>
   <p>Date start: {{event.dateStart}} {{event.timeStart}}</p>
-  <p>People responses: <b>{{event.interested.length + event.participants.length}}</b></p>
+  <p>People responses: <b>{{event.interested.length
+  + event.participants.length}}</b></p>
 </div>
 
 

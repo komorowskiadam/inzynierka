@@ -21,8 +21,25 @@ class _TransactionScreenState extends State<TransactionScreen> {
   _TransactionScreenState(this.transaction);
 
   Widget seatNumber() {
+    final amountStyle = TextStyle(fontSize: 22, fontWeight: FontWeight.w400);
+    final amountStyleBold =
+        TextStyle(fontSize: 22, fontWeight: FontWeight.w600);
+
     if (transaction.seatNumber != null) {
-      return Text("Seat number: ${transaction.seatNumber}");
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            'Seat number: ',
+            style: amountStyle,
+          ),
+          Text(
+            '${transaction.seatNumber}',
+            style: amountStyleBold,
+          ),
+        ],
+      );
     } else {
       return Container();
     }
@@ -30,40 +47,103 @@ class _TransactionScreenState extends State<TransactionScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final summaryStyle = TextStyle(fontSize: 24, fontWeight: FontWeight.w400);
+    final amountStyle = TextStyle(fontSize: 22, fontWeight: FontWeight.w400);
+    final amountStyleBold =
+        TextStyle(fontSize: 22, fontWeight: FontWeight.w600);
+
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Summary"),
+        automaticallyImplyLeading: false,
+      ),
       body: Center(
           child: Column(children: [
-        Text(transaction.status),
-        Text('${transaction.quantity}'),
+        const Padding(
+          padding: EdgeInsets.all(15),
+        ),
+        Text(
+          "Transaction summary",
+          style: summaryStyle,
+        ),
+        const Padding(
+          padding: EdgeInsets.all(10),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              'Ticket amount: ',
+              style: amountStyle,
+            ),
+            Text(
+              '${transaction.quantity}',
+              style: amountStyleBold,
+            ),
+          ],
+        ),
+        const Padding(
+          padding: EdgeInsets.all(10),
+        ),
         seatNumber(),
-        Text('${transaction.totalPrice}'),
-        ElevatedButton(
-            onPressed: () async {
-              var res = await eventService.cancelTransaction(transaction.id);
-              if (res!.statusCode == 200) {
-                Navigator.pop(context);
-                Navigator.pop(context);
-              }
-            },
-            child: const Text("Cancel transaction")),
-        ElevatedButton(
-            onPressed: () async {
-              var res = await eventService.payForTickets(transaction.id);
-              if (res!.statusCode == 200) {
-                // ignore: use_build_context_synchronously
-                Navigator.pop(context);
-                Navigator.pop(context);
-                Navigator.pop(context);
-                // ignore: use_build_context_synchronously
-                Navigator.push(
-                    context,
-                    SlideRightRoute(
-                        page: const HomeScreen(
-                      index: 1,
-                    )));
-              }
-            },
-            child: const Text("Pay"))
+        const Padding(
+          padding: EdgeInsets.all(10),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              'Total price: ',
+              style: amountStyle,
+            ),
+            Text(
+              '${transaction.totalPrice}',
+              style: amountStyleBold,
+            ),
+          ],
+        ),
+        const Padding(
+          padding: EdgeInsets.all(10),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            ElevatedButton(
+                onPressed: () async {
+                  var res =
+                      await eventService.cancelTransaction(transaction.id);
+                  if (res!.statusCode == 200) {
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                  }
+                },
+                child: const Text("Cancel transaction")),
+            const Padding(
+              padding: EdgeInsets.all(25),
+            ),
+            ElevatedButton(
+                onPressed: () async {
+                  var res = await eventService.payForTickets(transaction.id);
+                  if (res!.statusCode == 200) {
+                    // ignore: use_build_context_synchronously
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                    // ignore: use_build_context_synchronously
+                    Navigator.push(
+                        context,
+                        SlideRightRoute(
+                            page: const HomeScreen(
+                          index: 1,
+                        )));
+                  }
+                },
+                child: const Text("Pay"))
+          ],
+        ),
       ])),
     );
   }

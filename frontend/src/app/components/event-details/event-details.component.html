@@ -8,6 +8,7 @@
     </div>
     <button style="margin-top: 10px;" mat-raised-button color="primary" (click)="openCreatePromotionDialog()">Promote</button>
     <button style="margin-top: 20px; margin-bottom: 20px" mat-raised-button color="primary" (click)="openEditDialog()">Edit event details</button>
+    <h2 style="font-size: 24px; font-weight: lighter">Category: <b>{{event.category}}</b></h2>
     <h2 style="font-size: 24px; font-weight: lighter">Starts at: <b>{{event.dateStart}} {{event.timeStart}}</b></h2>
     <h2 style="font-size: 24px; font-weight: lighter" *ngIf="event.dateEnd && event.timeEnd">Ends at: <b>{{event.dateEnd}} {{event.timeEnd}}</b></h2>
     <h2 style="font-size: 22px; font-weight: lighter">Location: <b>{{event.location}}</b></h2>
@@ -38,7 +39,6 @@
       <img *ngIf="ticketPool.seatReservation" [src]="getTicketPoolSrc(ticketPool)" style="width: 50px;">
       <p><b>{{getAvailableTickets(ticketPool.tickets)}}</b> available</p>
       <p><b>{{getSoldTickets(ticketPool.tickets)}}</b> sold</p>
-      <p>DUPA: {{ticketPool.imageId}}</p>
       <button class="edit-pool-ticket" mat-raised-button color="primary" (click)="openEditTicketPoolDialog(ticketPool.id)">Edit ticket pool</button>
       <button mat-raised-button color="primary" (click)="openChangePoolQuantityDialog(ticketPool.id)">Change quantity of tickets</button>
     </div>

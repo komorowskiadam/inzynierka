@@ -26,4 +26,6 @@ public class Promotion {
     private PromotionStatus status;
     private LocalDate dateStart;
     private LocalDate dateEnd;
+
+    private boolean payed = false;
 }

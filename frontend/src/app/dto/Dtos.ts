@@ -1,17 +1,21 @@
-import { PromotionStatus, TicketPoolStatus } from "../model/Models";
+import { EventCategory, PromotionStatus, TicketPoolStatus } from "../model/Models";
 
 export interface LoginData {
   username: string;
   password: string;
 }
 
-export interface RegisterData {
-  username: string;
-  password: string;
-  roles: string[];
-  name: string;
-  description: string;
-}
+
+
+    export interface RegisterData {
+      username: string;
+      password: string;
+      role: string[];
+      name: string;
+      description: string;
+    }
+
+
 
 export interface RegisterResponse {
   message: string;
@@ -34,6 +38,7 @@ export interface CreateEventDto {
   timeEnd?: string;
   dateEnd?: string;
   imageId?: number;
+  category: EventCategory;
 }
 
 export interface EditEventDto {
@@ -44,6 +49,7 @@ export interface EditEventDto {
   location: string;
   timeEnd?: string;
   dateEnd?: string;
+  category: EventCategory;
 }
 
 export interface CreateTicketPoolDto {
@@ -79,4 +85,5 @@ export interface EditPromotionDto {
   status?: PromotionStatus | null;
   dateStart?: string | null;
   dateEnd?: string | null;
+  payed?: boolean;
 }

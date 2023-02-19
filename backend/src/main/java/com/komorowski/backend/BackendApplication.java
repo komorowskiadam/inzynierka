@@ -21,6 +21,10 @@ public class BackendApplication {
         MyRole roleUser = new MyRole(ERole.ROLE_USER);
         MyRole roleCreator = new MyRole(ERole.ROLE_CREATOR);
 
+        if(roleRepository.findByName(ERole.ROLE_CREATOR).isPresent() || roleRepository.findByName(ERole.ROLE_USER).isPresent()){
+            return args -> {};
+        }
+
         return args -> {
             roleRepository.save(roleUser);
             roleRepository.save(roleCreator);

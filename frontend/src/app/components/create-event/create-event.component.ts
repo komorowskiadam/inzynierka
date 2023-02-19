@@ -6,6 +6,7 @@ import { Store } from "@ngrx/store";
 import { addEvent, addEventImage } from "../../store/events/events.actions";
 import { Editor } from "tinymce";
 import { ToastrService } from "ngx-toastr";
+import { EventCategory, EventCategory2LabelMapping } from "../../model/Models";
 
 @Component({
   selector: 'app-create-event',
@@ -23,7 +24,8 @@ export class CreateEventComponent implements OnInit {
     dateStart: ['', Validators.required],
     timeEnd: [''],
     dateEnd: [''],
-    location: ['', Validators.required]
+    location: ['', Validators.required],
+    category: ['', Validators.required]
   });
 
   today: string;
@@ -31,6 +33,10 @@ export class CreateEventComponent implements OnInit {
   imgUrl: string | ArrayBuffer | null = "";
 
   selectedImage?: File;
+
+  public EventCategory2LabelMapping = EventCategory2LabelMapping;
+
+  public categories = Object.values(EventCategory);
 
   constructor(private formBuilder: FormBuilder,
               private tokenStorage: TokenStorageService,
@@ -78,10 +84,11 @@ export class CreateEventComponent implements OnInit {
     let timeEnd = this.createEventForm.value.timeEnd;
     let dateEnd = this.createEventForm.value.dateEnd;
     let location = this.createEventForm.value.location;
+    let category = this.createEventForm.value.category as unknown as EventCategory;
 
     let uploadImageData = undefined;
 
-    if(!name || !description || !timeStart || !dateStart || !location) return;
+    if(!name || !description || !timeStart || !dateStart || !location || !category) return;
     if(CreateEventComponent.tooManyChars) return;
 
     let createEventDto: CreateEventDto = {
@@ -90,7 +97,8 @@ export class CreateEventComponent implements OnInit {
       description,
       timeStart,
       dateStart,
-      location
+      location,
+      category
     }
     if(this.includeEndDate) {
       if(!timeEnd || !dateEnd)  return;

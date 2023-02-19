@@ -4,6 +4,7 @@ import { Router } from "@angular/router";
 import { AuthService } from "../../services/auth.service";
 import { RegisterData } from "../../dto/Dtos";
 import { catchError } from "rxjs";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: 'app-register',
@@ -24,7 +25,8 @@ export class RegisterComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private router: Router,
-              private authService: AuthService) { }
+              private authService: AuthService,
+              private toastr: ToastrService) { }
 
   ngOnInit(): void {
   }
@@ -33,12 +35,16 @@ export class RegisterComponent implements OnInit {
     let registerData: RegisterData = {
       username: this.registerForm.value.username || "",
       password: this.registerForm.value.password || "",
-      roles: ['creator'],
+      role: ['creator'],
       name: this.registerForm.value.name || "",
       description: this.registerForm.value.description || "",
     }
 
+    console.log(registerData);
+
     this.authService.register(registerData).subscribe(response => {
+      this.toastr.success("Registration successful");
+      this.router.navigate(['/login']);
       this.successMessage =  response.message;
     });
   }

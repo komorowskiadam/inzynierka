@@ -6,6 +6,7 @@ import 'package:mobile_app/services/my_event_service.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:numberpicker/numberpicker.dart';
 
+import '../helpers/constants.dart';
 import '../helpers/sliderightroute.dart';
 
 class BuyTicketWidgetScreen extends StatefulWidget {
@@ -55,7 +56,7 @@ class _BuyTicketWidgetScreenState extends State<BuyTicketWidgetScreen> {
 
       return Row(
         children: [
-          const Text("Select seat number"),
+          const Text("Select seat number  "),
           DropdownButton<int>(
               items: dropdownList,
               value: seatNumberValue,
@@ -77,15 +78,32 @@ class _BuyTicketWidgetScreenState extends State<BuyTicketWidgetScreen> {
     } else {
       return Column(
         children: [
+          const Text(
+            "Select amount of tickets: ",
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.w400),
+          ),
+          const Padding(padding: EdgeInsets.all(8)),
           NumberPicker(
             value: _currentValue,
             minValue: 1,
             maxValue: ticketPool.availableTickets,
             onChanged: (value) => setState(() => _currentValue = value),
           ),
+          const Padding(padding: EdgeInsets.all(12)),
           Text("Selected amount: $_currentValue")
         ],
       );
+    }
+  }
+
+  Widget image() {
+    if (ticketPool.seatReservation == true && ticketPool.imageId != null) {
+      return Image.network(
+        "${Constants.BASE_URL}/images/${ticketPool.imageId}",
+        fit: BoxFit.fill,
+      );
+    } else {
+      return Container();
     }
   }
 
@@ -96,8 +114,30 @@ class _BuyTicketWidgetScreenState extends State<BuyTicketWidgetScreen> {
       body: Center(
         child: Column(
           children: [
-            numberPicker(),
-            setSeatNumberWidget(),
+            image(),
+            const Padding(
+              padding: EdgeInsets.all(15),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                numberPicker(),
+              ],
+            ),
+            const Padding(
+              padding: EdgeInsets.all(15),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                setSeatNumberWidget(),
+              ],
+            ),
+            const Padding(
+              padding: EdgeInsets.all(30),
+            ),
             ElevatedButton(
                 onPressed: () async {
                   MyTransaction transaction;

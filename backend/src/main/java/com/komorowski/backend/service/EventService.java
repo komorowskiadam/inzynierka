@@ -30,6 +30,7 @@ public class EventService {
         clientEventDto.setTimeStart(event.getTimeStart());
         clientEventDto.setDateEnd(event.getDateEnd());
         clientEventDto.setTimeEnd(event.getTimeEnd());
+        clientEventDto.setCategory(event.getCategory());
         clientEventDto.setImageId(event.getImageId());
 
         List<Integer> likes = event.getLikes()
@@ -54,6 +55,7 @@ public class EventService {
         details.setDateEnd(event.getDateEnd());
         details.setTimeEnd(event.getTimeEnd());
         details.setImageId(event.getImageId());
+        details.setCategory(event.getCategory());
 
         List<TicketPoolDto> ticketPoolDtos = event.getTicketPools()
                 .stream()
@@ -86,6 +88,7 @@ public class EventService {
     public TicketPoolDto getTicketPoolDto(TicketPool ticketPool, Long eventId) {
         TicketPoolDto dto = new TicketPoolDto();
 
+        dto.setImageId(ticketPool.getImageId());
         dto.setId(ticketPool.getId());
         dto.setStatus(ticketPool.getStatus());
         dto.setName(ticketPool.getName());

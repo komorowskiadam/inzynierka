@@ -13,6 +13,17 @@
       Name should have at least 5 characters.
     </mat-error>
   </mat-form-field>
+    <mat-form-field class="form-field" appearance="fill">
+      <mat-label>Category</mat-label>
+      <mat-select formControlName="category">
+        <mat-option *ngFor="let val of categories" [value]="val">
+          {{EventCategory2LabelMapping[val]}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="createEventForm.get('category')?.hasError('required')">
+        Category is required.
+      </mat-error>
+    </mat-form-field>
   <div class="mat-form-field-wrapper">
     <label>Description: </label>
     <editor [init]="{ plugins: 'lists link image table code wordcount', menubar: false, width: 700, setup: setup}"
@@ -61,7 +72,13 @@
     <img class="event-preview__image" [src]="imgUrl">
     <div class="event-info">
       <h1>{{createEventForm.value.name}}</h1>
-      <mat-icon>info</mat-icon>
+      <p class="event-preview__row"><mat-icon>category</mat-icon>Category: {{createEventForm.value.category}}</p>
+      <p class="event-preview__row"><mat-icon>calendar_today</mat-icon>{{createEventForm.value.dateStart}} at {{createEventForm.value.timeStart}}</p>
+      <p *ngIf="createEventForm.value.timeEnd" class="event-preview__row"><mat-icon>timer</mat-icon>7 hours</p>
+      <p class="event-preview__row"><mat-icon>check_circle</mat-icon>Participants: 0</p>
+      <p class="event-preview__row"><mat-icon>person_pin</mat-icon>Interested: 0</p>
+      <p class="event-preview__row"><mat-icon>location_on</mat-icon>Location: {{createEventForm.value.location}}</p>
+      <p class="event-preview__row"><mat-icon>bookmark</mat-icon>Tickets available</p>
     </div>
 
   </div>

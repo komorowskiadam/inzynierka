@@ -45,6 +45,7 @@ public class EventController {
         newEvent.setTimeStart(createEventDto.getTimeStart());
         newEvent.setTimeEnd(createEventDto.getTimeEnd());
         newEvent.setLocation(createEventDto.getLocation());
+        newEvent.setCategory(createEventDto.getCategory());
 
         if(createEventDto.getImageId() != null) {
             newEvent.setImageId(createEventDto.getImageId());
@@ -98,6 +99,9 @@ public class EventController {
         }
         if(editEventDto.getLocation() != null) {
             event.setLocation(editEventDto.getLocation());
+        }
+        if(editEventDto.getCategory() != null) {
+            event.setCategory(editEventDto.getCategory());
         }
         eventRepository.save(event);
 

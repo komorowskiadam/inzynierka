@@ -40,8 +40,7 @@ class EventMiniatureWidget extends StatefulWidget {
         "Today at $formatedDateStart",
         style: style,
       ));
-    }
-    if (diff == 1) {
+    } else if (diff == 1) {
       var formatedDateStart = DateFormat("HH:mm").format(start);
       startRow.add(Text(
         "Tomorrow at $formatedDateStart",
@@ -160,6 +159,19 @@ class _EventMiniatureWidgetState extends State<EventMiniatureWidget> {
                     child: Text(event.name, style: eventNameStyle),
                   ),
                   const Padding(padding: EdgeInsets.all(8)),
+                  Row(
+                    children: [
+                      const Icon(
+                        Icons.category,
+                        color: Colors.black,
+                      ),
+                      Text(
+                        'Category: ${event.category}',
+                        style: interestedStyle,
+                      ),
+                    ],
+                  ),
+                  const Padding(padding: EdgeInsets.all(5)),
                   EventMiniatureWidget.getDates(
                       event.dateTimeStart, event.dateTimeEnd, interestedStyle),
                   const Padding(padding: EdgeInsets.all(5)),
@@ -171,7 +183,7 @@ class _EventMiniatureWidgetState extends State<EventMiniatureWidget> {
                       ),
                       Text(
                         'Participants: ${event.participantsCount}',
-                        style: participantsStyle,
+                        style: interestedStyle,
                       ),
                     ],
                   ),

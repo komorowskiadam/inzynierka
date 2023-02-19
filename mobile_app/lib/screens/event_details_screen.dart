@@ -132,11 +132,24 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
-                              "Event will take place in ",
+                              "Location: ",
                               style: locationStyle,
                             ),
                             Text(snapshot.data!.location,
                                 style: locationStyleBold)
+                          ],
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.all(5),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              "On ${snapshot.data!.dateStart} at ${snapshot.data!.timeStart}",
+                              style: locationStyle,
+                            )
                           ],
                         ),
                         const Padding(
@@ -348,6 +361,11 @@ class EventPostList extends StatelessWidget {
 
     for (var i = 0; i < sorted.length; i++) {
       list.add(EventPostWidget(eventPost: sorted[i]));
+      list.add(
+        const Padding(
+          padding: EdgeInsets.all(6),
+        ),
+      );
     }
 
     return Column(

@@ -4,7 +4,7 @@ import { Store } from "@ngrx/store";
 import { EditEventDto } from "../../dto/Dtos";
 import { editEvent } from "../../store/events/events.actions";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
-import { MyEvent } from "../../model/Models";
+import { MyEvent, EventCategory, EventCategory2LabelMapping } from "../../model/Models";
 import { Editor } from 'tinymce';
 
 @Component({
@@ -24,8 +24,13 @@ export class EditEventComponent {
     dateStart: ['', Validators.required],
     timeEnd: [''],
     dateEnd: [''],
-    location: ['', Validators.required]
+    location: ['', Validators.required],
+    category: ['', Validators.required]
   });
+
+  public EventCategory2LabelMapping = EventCategory2LabelMapping;
+
+  public categories = Object.values(EventCategory);
 
   constructor(private formBuilder: FormBuilder,
               private store$: Store,
@@ -38,7 +43,8 @@ export class EditEventComponent {
       dateStart: event.dateStart,
       timeEnd: event.timeEnd || '',
       dateEnd: event.dateEnd || '',
-      location: event.location
+      location: event.location,
+      category: event.category
     });
     this.today = new Date().toISOString().slice(0, 10);
 
@@ -55,6 +61,7 @@ export class EditEventComponent {
     let timeEnd = this.editForm.value.timeEnd;
     let dateEnd = this.editForm.value.dateEnd;
     let location = this.editForm.value.location;
+    let category = this.editForm.value.category as unknown as EventCategory;
 
     if(!name || !description || !timeStart || !dateStart || !location) return;
 
@@ -65,7 +72,8 @@ export class EditEventComponent {
       dateStart,
       timeEnd: '',
       dateEnd: '',
-      location
+      location,
+      category
     }
     if(this.includeEndDate) {
       if(!timeEnd || !dateEnd)  return;
@@ -119,7 +127,7 @@ export class EditEventComponent {
     // @ts-ignore
     editor.on('keyup', (event) => {
       let numChars = editor.plugins['wordcount']['body'].getCharacterCount();
-      EditEventComponent.tooManyChars = numChars > 100;
+      EditEventComponent.tooManyChars = numChars > 10000;
     });
   }
 

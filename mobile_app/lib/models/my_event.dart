@@ -10,6 +10,7 @@ class MyEvent {
   final DateTime dateTimeStart;
   final DateTime? dateTimeEnd;
   final String location;
+  final String category;
 
   MyEvent(
       {required this.id,
@@ -20,7 +21,8 @@ class MyEvent {
       required this.imageId,
       required this.dateTimeStart,
       required this.dateTimeEnd,
-      required this.location});
+      required this.location,
+      required this.category});
 
   factory MyEvent.fromJson(Map<String, dynamic> json) {
     final codeUnits = json['name'].toString().codeUnits;
@@ -53,6 +55,7 @@ class MyEvent {
         imageId: json['imageId'],
         location: location,
         dateTimeStart: start,
-        dateTimeEnd: end);
+        dateTimeEnd: end,
+        category: json['category']);
   }
 }

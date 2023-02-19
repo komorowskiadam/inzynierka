@@ -67,4 +67,10 @@ export class EventService {
   editPromotion(id: number, dto: EditPromotionDto): Observable<Promotion> {
     return this.http.patch<Promotion>(backendAddress + "/promotions/" + id, dto);
   }
+
+
+  payByPaypal(amount: number): Observable<string> {
+    return this.http.post<string>(backendAddress + "/orders?totalAmount=" + amount, null);
+  }
+
 }

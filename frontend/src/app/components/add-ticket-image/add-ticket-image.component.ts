@@ -5,6 +5,7 @@ import { Store } from "@ngrx/store";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { EditTicketPoolDto } from "../../dto/Dtos";
 import { addEventImage, addTicketImage, changeTicketPoolStatus } from "../../store/events/events.actions";
+import { EventService } from "../../services/event.service";
 
 @Component({
   selector: 'app-add-ticket-image',
@@ -23,6 +24,7 @@ export class AddTicketImageComponent {
   constructor(private formBuilder: FormBuilder,
               private store$: Store,
               private dialogRef: MatDialogRef<AddTicketImageComponent>,
+              private eventService: EventService,
               @Inject(MAT_DIALOG_DATA) public data: { event: MyEvent, poolId: number }) {
     this.selectedPool = this.data.event.ticketPools.filter(p => p.id == this.data.poolId)[0];
   }
@@ -38,6 +40,7 @@ export class AddTicketImageComponent {
     if(this.selectedImage && this.selectedImage.name) {
       uploadImageData = new FormData();
       uploadImageData.append('imageFile', this.selectedImage, this.selectedImage.name);
+
       this.store$.dispatch(addTicketImage({
         eventId: this.data.event.id,
         poolId: this.data.poolId,

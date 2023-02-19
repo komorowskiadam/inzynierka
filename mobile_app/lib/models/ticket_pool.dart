@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 class TicketPool {
   final int id;
   final String name;
@@ -6,6 +8,7 @@ class TicketPool {
   final String status;
   final List<int> availableSeats;
   final bool seatReservation;
+  final int? imageId;
 
   const TicketPool(
       {required this.id,
@@ -14,7 +17,8 @@ class TicketPool {
       required this.status,
       required this.soldTickets,
       required this.availableSeats,
-      required this.seatReservation});
+      required this.seatReservation,
+      required this.imageId});
 
   factory TicketPool.fromJson(Map<String, dynamic> json) {
     return TicketPool(
@@ -24,7 +28,8 @@ class TicketPool {
         soldTickets: json['soldTickets'],
         status: json['status'],
         availableSeats: json['availableSeats'].cast<int>(),
-        seatReservation: json['seatReservation']);
+        seatReservation: json['seatReservation'],
+        imageId: json['imageId']);
   }
 }
 

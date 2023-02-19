@@ -1,5 +1,6 @@
 package com.komorowski.backend.model;
 
+import com.komorowski.backend.model.enums.EventCategory;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -48,5 +49,7 @@ public class Event {
     private String timeEnd;
 
     private Long imageId;
+
+    private EventCategory category;
 
 }

@@ -153,7 +153,7 @@ export class EventsEffects {
         return changeTicketPoolStatus({
           eventId,
           poolId,
-          status: {...status, imageId}});
+          status: {...status, imageId: imageId}});
       })
     ))
   ));

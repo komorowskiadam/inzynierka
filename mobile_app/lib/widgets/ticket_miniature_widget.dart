@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app/helpers/constants.dart';
 import 'package:mobile_app/models/ticket.dart';
 import 'package:mobile_app/screens/ticket_details_screen.dart';
 
@@ -20,9 +21,16 @@ class TicketMiniatureWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final titleStyle = TextStyle(fontSize: 24, fontWeight: FontWeight.w400);
+    final titleStyleBold = TextStyle(fontSize: 24, fontWeight: FontWeight.w600);
+    final ButtonStyle buttonStyle = ElevatedButton.styleFrom(
+        padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+        backgroundColor: Constants.colorPink);
+
     return Padding(
-      padding: EdgeInsets.all(10),
+      padding: EdgeInsets.all(20),
       child: ElevatedButton(
+        style: buttonStyle,
         onPressed: () {
           Navigator.push(
               context,
@@ -35,7 +43,19 @@ class TicketMiniatureWidget extends StatelessWidget {
         },
         child: Column(
           children: [
-            Text("Ticket for ${ticket.eventName} "),
+            Row(
+              children: [
+                Text(
+                  "Ticket for ",
+                  style: titleStyle,
+                ),
+                Text(
+                  "${ticket.eventName.substring(0, 12)}...",
+                  style: titleStyleBold,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
             Row(
               children: [seatNumber()],
             )

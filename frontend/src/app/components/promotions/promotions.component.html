@@ -21,6 +21,8 @@
           <p>Status: <span [class]="promotionStatus2LabelMapping[promotion.status]">{{promotionStatus2LabelMapping[promotion.status]}}</span></p>
           <p>Starts at: {{readableDate(promotion.dateStart)}}</p>
           <p>Ends at: {{readableDate(promotion.dateEnd)}}</p>
+          <p *ngIf="promotion.payed === false">Promotion is not payed. Pay 140zł now: <button mat-raised-button color="primary" (click)="pay(140, promotion.id)">Pay</button></p>
+          <p *ngIf="promotion.payed">Payment status: <b>PAYED</b></p>
         </div>
       </div>
     </div>

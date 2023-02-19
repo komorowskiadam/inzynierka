@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class Ticket {
   final int id;
   final String eventName;
@@ -11,9 +13,12 @@ class Ticket {
       required this.seatNumber});
 
   factory Ticket.fromJson(Map<String, dynamic> data) {
+    final codeUnits = data['eventName'].toString().codeUnits;
+    String name = const Utf8Decoder().convert(codeUnits);
+
     return Ticket(
         id: data['id'],
-        eventName: data['eventName'],
+        eventName: name,
         status: data['status'],
         seatNumber: data['seatNumber']);
   }
